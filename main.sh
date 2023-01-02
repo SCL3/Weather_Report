@@ -5,16 +5,28 @@ help()
 	#Display help
 	echo "This script filter and sort a meteo data csv file (specialy the one we are using in this project) depending on the option we are selecting"
 	echo
-	echo "Syntax : main.sh [option]..."
+	echo "Syntax : main.sh [argument]<option>"
 	echo "Options :"
 	echo "--help     Show this help text" 
 	echo "-f [file]     Select the meteo data file"
+	echo "-t<1|2|3>     Create a file containing the temperature depending of the option : 1) Average temperature, minimum et maximum temperature depending of the station)"
+	echo "                                                                  2) Average temperature depending of the time"
+	echo "                                                                  3) Average temperature depending of the time and the station"
+	echo "-p<1|2|3>     Create a file containing the atmospheric pressure depending of the option : 1) Average atmospheric pressure depending of the station"
+	echo "                                                                           2) Average atmospheric pressure depending of the time"
+	echo "                                                                           3) Average atmospheric pressure depending of the time and the station"
+	echo "-w     Create a file containing the wind with the average direction and average wind speed for each station"
+	echo "-h     Create a file containing the height for each station"
+	echo "-m     Create a file containing the maximum moisture for each station"
 	echo
 }
 
 
 echo "Number of argument : "$#
-echo 
+if [[ $1 == '--help' ]]; then
+	help
+fi
+
 
 verif=0  
 for i in $(seq 1 $#) ; do  #Check if the "-f" argument is used
@@ -41,9 +53,7 @@ fi
 for i in $(seq 1 $#) ; do  #Do the option for each arguments
 	ARG=${!i}  
 	case $ARG in
-		'--help') help  #Display help
-			;;
-		'-f' | $file_name)  #Do nothing to avoid displaying the unknown argument statement.
+		'-f' | $file_name | '--help')  #Do nothing to avoid displaying the unknown argument statement.
 			;;
 
 		'-t'*) echo "Temperature" ; case $ARG in  #Create a csv file depending of the mode chosen
