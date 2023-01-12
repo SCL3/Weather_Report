@@ -22,19 +22,19 @@ Avl* createAvl(int val, int val2){
 	return pNew;
 }
 
-void infixeAvl(Avl* pTree){
+void infixeAvl_h(Avl* pTree){  //ascending order
     if(pTree != NULL){
-        infixeAvl(pTree -> pLeft);
+        infixeAvl_h(pTree -> pLeft);
         printf("val : %d et eq : %d \n", pTree -> value, pTree -> balance);
-        infixeAvl(pTree -> pRight);
+        infixeAvl_h(pTree -> pRight);
     }
 }
 
-void infixeDecAvl(Avl* pTree){
+void infixeDecAvl_h(Avl* pTree){  //descending order
     if(pTree != NULL){
-        infixeDecAvl(pTree -> pRight);
-        printf("station : %d et altitude : %d \n", pTree -> value, pTree -> value2);
-        infixeDecAvl(pTree -> pLeft);
+        infixeDecAvl_h(pTree -> pRight);
+        printf("altitude : %d et station : %d\n", pTree -> value, pTree -> value2);
+        infixeDecAvl_h(pTree -> pLeft);
     }
 }
 
@@ -166,4 +166,22 @@ Avl* insertAvl_bis(Avl* pAvl, int a, int b, int* h){
 Avl* insertAvl(Avl* pAvl, int a, int b){
  	int h;
 	return insertAvl_bis(pAvl, a, b, &h);
+}
+
+int descending_csv_h(FILE* output ,Avl* height_avl){
+	if(height_avl != NULL){
+		descending_csv_h(output, height_avl -> pRight);
+		fprintf(output, "%d;%d\n", height_avl -> value2, height_avl -> value);
+		descending_csv_h(output, height_avl -> pLeft);
+	}
+	return 0;
+}
+
+int ascending_csv_h(FILE* output ,Avl* height_avl){
+	if(height_avl != NULL){
+		ascending_csv_h(output, height_avl -> pLeft);
+		fprintf(output, "%d;%d\n", height_avl -> value2, height_avl -> value);
+		ascending_csv_h(output, height_avl -> pRight);
+	}
+	return 0;
 }
