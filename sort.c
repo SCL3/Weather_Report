@@ -54,11 +54,14 @@ int main(int argc, char *argv[]){
 		if(strcmp(argv[i], "r") == 0){  //descending order asked
 			ascending = 0;
 		}
-		if(strcmp(argv[i], "abr") == 0){  //sort mode asked
+		else if(strcmp(argv[i], "abr") == 0){  //sort mode asked
 			sort_mode = 1;
 		}
-		if(strcmp(argv[i], "tab") == 0){  //sort mode asked
+		else if(strcmp(argv[i], "tab") == 0){  //sort mode asked
 			sort_mode = 2;
+		}
+		else if(strcmp(argv[i], "avl") == 0){  //sort mode asked
+			sort_mode = 0;
 		}
 		else{
 			printf("The argument '%s' does not exist\n", argv[i]);

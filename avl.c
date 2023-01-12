@@ -138,8 +138,17 @@ Avl* insertAvl_bis(Avl* pAvl, int a, int b, int* h){
 		pAvl -> pRight = insertAvl_bis(pAvl -> pRight, a, b, h);
 	}
 	else{  //If the value already exist
-		*h = 0;
-		return pAvl;
+		if (b < pAvl->value2){
+			pAvl->pLeft= insertAvl_bis(pAvl -> pLeft, a, b, h);
+			*h= -*h;
+		}
+		else if(b > pAvl -> value2){
+			pAvl -> pRight = insertAvl_bis(pAvl -> pRight, a, b, h);
+		}
+		else {
+			*h=0;
+			return pAvl;
+		}
 	}
 	if(*h != 0){  //If there is a change in the avl
 		pAvl -> balance = pAvl -> balance + *h;
