@@ -11,6 +11,7 @@ help()
 	echo "Options :"
 	echo "--help     Show this help text" 
 	echo "-f [file]     Select the meteo data file"
+	echo "-r Ascending to descending mode"
 	echo "-t<1|2|3>     Create a file containing the temperature depending of the option : 1) Average temperature, minimum et maximum temperature depending of the station)"
 	echo "                                                                                 2) Average temperature depending of the time"
 	echo "                                                                                 3) Average temperature depending of the time and the station"
@@ -31,17 +32,30 @@ fi
 
 
 verif=0  
+ascending=1
+sort_mode='avl'
+echo $sort_mode
 for i in $(seq 1 $#) ; do  #Check if the "-f" argument is used
 	ARG=${!i}
-	if [[ $ARG == '-f' ]]; then
-		(( file_value=$i+1 ))  #The next argument is the file name of the meteo data
-		file_name=${!file_value}
-		if [ -f "$file_name" ]; then  #Check if the meteo data file does exist
-			verif=1
-		else
-			verif=2
-		fi
-	fi
+	case $ARG in 
+		'-f') 
+			(( file_value=$i+1 ))  #The next argument is the file name of the meteo data
+			file_name=${!file_value}
+			if [ -f "$file_name" ]; then  #Check if the meteo data file does exist
+				verif=1
+			else
+				verif=2
+			fi
+			;;
+		'-r') ascending=0
+			;;
+		'-avl') sort_mode="avl"
+			;;
+		'-abr') sort_mode="abr"
+			;;
+		'-tab') sort_mode='tab' ; echo $sort_mode
+			;;	
+	esac	
 done
 
 if [[ $verif -eq 0 ]]; then  #If the argument "-f" is not used :
@@ -55,7 +69,8 @@ fi
 for i in $(seq 1 $#) ; do  #Do the option for each arguments
 	ARG=${!i}  
 	case $ARG in
-		'-f' | $file_name | '--help')  #Do nothing to avoid displaying the unknown argument statement.
+	
+		'-f' | $file_name | '--help' | '-r' | '-tab' | '-abr' | '-avl')  #Do nothing to avoid displaying the unknown argument statement.
 			;;
 
 		'-t'*) echo "Temperature" ; case $ARG in  #Create a csv file depending of the mode chosen
@@ -80,7 +95,7 @@ for i in $(seq 1 $#) ; do  #Do the option for each arguments
 			;;
 		'-w') echo "Wind" ; cut -d ';' -f 1,4,5 $file_name > wind.csv #Create a csv file containing the average orientation and the average speed for each station.
 			;;
-		'-h') echo "Height" ; cut -d ';' -f 1,14 $file_name > height.csv ; #Create a csv file containing the height of each station.
+		'-h') echo "Height" ; cut -d ';' -f 1,14 $file_name > height.csv ; ./sort height.csv height_sorted.txt $ascending $sortmode #Create a csv file containing the height of each station.
 			;;
 		'-m') echo "Moisture" ; cut -d ';' -f 1,6 $file_name > moisture.csv  #create a csv file containing the maximum humidity for each station.
 			;;

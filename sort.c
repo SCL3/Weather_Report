@@ -22,7 +22,7 @@ int height(char* output_fname, int ascending, int sort_mode){
 		fprintf(output, "Station;Height\n");
 	
 		char row[30];
-		Avl* height_avl;
+		Avl* height_avl = NULL;
 		char* station_c;
 		char* height_c;
 		char* token;
@@ -39,7 +39,6 @@ int height(char* output_fname, int ascending, int sort_mode){
 			height = atoi(height_c);
 			height_avl = insertAvl(height_avl, height, station);	
 		}
-		infixeDecAvl_h(height_avl);
 		if(ascending == 1){  //If the default mode is chosed, the height will be descending
 			return descending_csv_h(output, height_avl);
 		}
@@ -48,10 +47,10 @@ int height(char* output_fname, int ascending, int sort_mode){
 		}
 	}
 	else if(sort_mode == 1){
-	
+		printf("height, %s, %d, %d\n", output_fname, ascending, sort_mode);
 	}
 	else{
-	
+		printf("height, %s, %d, %d\n", output_fname, ascending, sort_mode);
 	}
 	return 0;
 }
@@ -65,7 +64,9 @@ int main(int argc, char *argv[]){
 	int sort_mode = 0; //(default) avl = 0 ; abr = 1 ; tab = 2     
 	// ./sort height.csv sorted.csv r avl
 	for(int i = 3; i < argc; i++){
-		if(strcmp(argv[i], "r") == 0){  //descending order asked ("strcmp" used to compare two string)
+		if(strcmp(argv[i], "1") == 0){
+		}
+		else if(strcmp(argv[i], "0") == 0){  //descending order asked ("strcmp" used to compare two string)
 			ascending = 0;
 		}
 		else if(strcmp(argv[i], "abr") == 0){  //sort mode asked
@@ -73,6 +74,7 @@ int main(int argc, char *argv[]){
 		}
 		else if(strcmp(argv[i], "tab") == 0){  //sort mode asked
 			sort_mode = 2;
+			printf("oui ca a marcher");
 		}
 		else if(strcmp(argv[i], "avl") == 0){  //sort mode asked
 			sort_mode = 0;
