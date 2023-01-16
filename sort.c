@@ -74,7 +74,6 @@ int main(int argc, char *argv[]){
 		}
 		else if(strcmp(argv[i], "tab") == 0){  //sort mode asked
 			sort_mode = 2;
-			printf("oui ca a marcher");
 		}
 		else if(strcmp(argv[i], "avl") == 0){  //sort mode asked
 			sort_mode = 0;

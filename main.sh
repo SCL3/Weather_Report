@@ -34,7 +34,6 @@ fi
 verif=0  
 ascending=1
 sort_mode='avl'
-echo $sort_mode
 for i in $(seq 1 $#) ; do  #Check if the "-f" argument is used
 	ARG=${!i}
 	case $ARG in 
@@ -53,7 +52,7 @@ for i in $(seq 1 $#) ; do  #Check if the "-f" argument is used
 			;;
 		'-abr') sort_mode="abr"
 			;;
-		'-tab') sort_mode='tab' ; echo $sort_mode
+		'-tab') sort_mode='tab'
 			;;	
 	esac	
 done
@@ -95,7 +94,7 @@ for i in $(seq 1 $#) ; do  #Do the option for each arguments
 			;;
 		'-w') echo "Wind" ; cut -d ';' -f 1,4,5 $file_name > wind.csv #Create a csv file containing the average orientation and the average speed for each station.
 			;;
-		'-h') echo "Height" ; cut -d ';' -f 1,14 $file_name > height.csv ; ./sort height.csv height_sorted.txt $ascending $sortmode #Create a csv file containing the height of each station.
+		'-h') echo "Height" ; cut -d ';' -f 1,14 $file_name > height.csv ; ./sort height.csv height_sorted.txt $ascending $sort_mode #Create a csv file containing the height of each station.
 			;;
 		'-m') echo "Moisture" ; cut -d ';' -f 1,6 $file_name > moisture.csv  #create a csv file containing the maximum humidity for each station.
 			;;
