@@ -1,21 +1,20 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include "head.h"
 
-typedef struct _avl{
-	int value;
-	int value2;
-	struct _avl* pLeft;
-	struct _avl* pRight;
-	int balance;
-}Avl;
+Mto* createMto(){
+	Mto* pNew = malloc(sizeof(Mto));
+	if(pNew == NULL){  // Check if the malloc worked
+		exit(4);
+	}
+	return pNew;
+}
 
-Avl* createAvl(int val, int val2){
+Avl* createAvl(int val, Mto* meteo){
 	Avl* pNew = malloc(sizeof(Avl));
-	if(pNew == NULL){
+	if(pNew == NULL){  // Check if the malloc worked
 		exit(4);
 	}
 	pNew -> value = val;
-	pNew -> value2 = val2;
+	pNew -> Meteo = meteo;
 	pNew -> pLeft = NULL;
 	pNew -> pRight = NULL;
 	pNew -> balance = 0;
@@ -33,7 +32,7 @@ void infixeAvl_h(Avl* pTree){  //ascending order
 void infixeDecAvl_h(Avl* pTree){  //descending order
     if(pTree != NULL){
         infixeDecAvl_h(pTree -> pRight);
-        printf("altitude : %d et station : %d\n", pTree -> value, pTree -> value2);
+        printf("altitude : %d et station : %d\n", pTree -> value, pTree -> Meteo -> height);
         infixeDecAvl_h(pTree -> pLeft);
     }
 }
@@ -125,27 +124,36 @@ Avl* balanceAvl(Avl* pAvl){
 	return pAvl;
 }
 
-Avl* insertAvl_bis(Avl* pAvl, int a, int b, int* h){
+Avl* insertAvl_bis(Avl* pAvl, int val, Mto* meteo, int* h){
 	if(pAvl == NULL){  //Create a new tree for the avl
 		*h = 1;
-		return createAvl(a, b);
+		return createAvl(val, meteo);
 	}
-	else if(a < pAvl -> value){
-		pAvl -> pLeft = insertAvl_bis(pAvl -> pLeft, a, b, h);
+	else if(val < pAvl -> value){
+		pAvl -> pLeft = insertAvl_bis(pAvl -> pLeft, val, meteo, h);
 		*h = -*h;
 	}
-	else if(a > pAvl -> value){
-		pAvl -> pRight = insertAvl_bis(pAvl -> pRight, a, b, h);
+	else if(val > pAvl -> value){
+		pAvl -> pRight = insertAvl_bis(pAvl -> pRight, val, meteo, h);
 	}
 	else{  //If the value already exist
-		if (b < pAvl->value2){
-			pAvl->pLeft= insertAvl_bis(pAvl -> pLeft, a, b, h);
-			*h= -*h;
+		if(meteo -> value_sorted == 1){  //Sort mode for the Height
+			if (meteo -> station < pAvl -> Meteo -> station){
+				pAvl->pLeft= insertAvl_bis(pAvl -> pLeft, val, meteo, h);
+				*h= -*h;
+			}
+			else if(meteo -> station > pAvl -> Meteo -> station){
+				pAvl -> pRight = insertAvl_bis(pAvl -> pRight, val, meteo, h);
+			}
+			else {  //if the height value and the station is the same
+				*h=0;
+				return pAvl;
+			}
 		}
-		else if(b > pAvl -> value2){
-			pAvl -> pRight = insertAvl_bis(pAvl -> pRight, a, b, h);
-		}
-		else {
+		if(meteo -> value_sorted == 2){  //Sort mode for the Moisture
+			if(meteo -> moisture > pAvl -> Meteo -> moisture){  //Replace the lowest moisture value with the highest 
+				pAvl -> Meteo -> moisture = meteo -> moisture;
+			}
 			*h=0;
 			return pAvl;
 		}
@@ -163,25 +171,34 @@ Avl* insertAvl_bis(Avl* pAvl, int a, int b, int* h){
 	return pAvl;
 }
 
-Avl* insertAvl(Avl* pAvl, int a, int b){
+Avl* insertAvl(Avl* pAvl, int a, Mto* meteo){
  	int h;
-	return insertAvl_bis(pAvl, a, b, &h);
+	return insertAvl_bis(pAvl, a, meteo, &h);
 }
 
-int descending_csv_h(FILE* output ,Avl* height_avl){
-	if(height_avl != NULL){
-		descending_csv_h(output, height_avl -> pRight);
-		fprintf(output, "%d;%d\n", height_avl -> value2, height_avl -> value);
-		descending_csv_h(output, height_avl -> pLeft);
+void recreateAvl(Avl** pAvl, Avl* pAvl_tmp){
+	if(pAvl_tmp != NULL){
+		pAvl_tmp -> Meteo -> value_sorted = 1;  //Change the value to recreate the Avl tree with the Height sort method
+		*pAvl = insertAvl(*pAvl, pAvl_tmp -> Meteo -> moisture, pAvl_tmp -> Meteo);
+		recreateAvl(pAvl, pAvl_tmp -> pLeft);
+		recreateAvl(pAvl, pAvl_tmp -> pRight);
+	}
+}
+
+int descending_csv_h(FILE* output ,Avl* pAvl){
+	if(pAvl != NULL){
+		descending_csv_h(output, pAvl -> pRight);
+		fprintf(output, "%d;%d\n", pAvl -> Meteo -> station, pAvl -> value);
+		descending_csv_h(output, pAvl -> pLeft);
 	}
 	return 0;
 }
 
-int ascending_csv_h(FILE* output ,Avl* height_avl){
-	if(height_avl != NULL){
-		ascending_csv_h(output, height_avl -> pLeft);
-		fprintf(output, "%d;%d\n", height_avl -> value2, height_avl -> value);
-		ascending_csv_h(output, height_avl -> pRight);
+int ascending_csv_h(FILE* output ,Avl* pAvl){
+	if(pAvl != NULL){
+		ascending_csv_h(output, pAvl -> pLeft);
+		fprintf(output, "%d;%d\n", pAvl -> Meteo -> station, pAvl -> value);
+		ascending_csv_h(output, pAvl -> pRight);
 	}
 	return 0;
 }

@@ -58,7 +58,7 @@ for i in $(seq 1 $#) ; do  #Check if the "-f" argument is used
 done
 
 if [[ $verif -eq 0 ]]; then  #If the argument "-f" is not used :
-	echo "There is no meteo data file selected"
+	echo "There is no meteo data file selected, please use -f [file_name.csv]"
 	exit 2  #Exit the program
 elif  [[ $verif -eq 2 ]]; then  #Else if the meteo data file does not exist :
 	echo "The meteo data file does not exist"
@@ -96,7 +96,7 @@ for i in $(seq 1 $#) ; do  #Do the option for each arguments
 			;;
 		'-h') echo "Height" ; cut -d ';' -f 1,14 $file_name > height.csv ; ./sort height.csv height_sorted.txt $ascending $sort_mode #Create a csv file containing the height of each station.
 			;;
-		'-m') echo "Moisture" ; cut -d ';' -f 1,6 $file_name > moisture.csv  #create a csv file containing the maximum humidity for each station.
+		'-m') echo "Moisture" ; cut -d ';' -f 1,6 $file_name > moisture.csv ; ./sort moisture.csv moisture_sorted.txt $ascending $sort_mode #create a csv file containing the maximum humidity for each station.
 			;;
 		*) echo "Unknown argument, use --help for more details"  #The argument given is not treated.
 	esac

@@ -1,8 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "avl.c"
-#include "avl.h"
+#include "head.h"
 
 int height(char* output_fname, int ascending, int sort_mode){
 	if(sort_mode == 0){
@@ -29,6 +25,7 @@ int height(char* output_fname, int ascending, int sort_mode){
 		int station, height;
 		fgets(row, 30, input);  //remove the first line
 		while(fgets(row, 30, input) != NULL){  //while we are not in the end of a file
+			Mto* meteo = createMto();
 			token = strtok(row, ";");
 			station_c = token;
 			while(token != NULL){
@@ -37,7 +34,9 @@ int height(char* output_fname, int ascending, int sort_mode){
 			}	
 			station = atoi(station_c);
 			height = atoi(height_c);
-			height_avl = insertAvl(height_avl, height, station);	
+			meteo -> station = station;
+			meteo -> value_sorted = 1;
+			height_avl = insertAvl(height_avl, height, meteo);	
 		}
 		if(ascending == 1){  //If the default mode is chosed, the height will be descending
 			return descending_csv_h(output, height_avl);
@@ -47,10 +46,67 @@ int height(char* output_fname, int ascending, int sort_mode){
 		}
 	}
 	else if(sort_mode == 1){
-		printf("height, %s, %d, %d\n", output_fname, ascending, sort_mode);
+		printf("height (pas pour l'instant), %s, %d, %d\n", output_fname, ascending, sort_mode);
 	}
 	else{
-		printf("height, %s, %d, %d\n", output_fname, ascending, sort_mode);
+		printf("height (pas pour l'instant), %s, %d, %d\n", output_fname, ascending, sort_mode);
+	}
+	return 0;
+}
+
+int moisture(char* output_fname, int ascending, int sort_mode){
+	if(sort_mode == 0){
+		FILE* input;  //input data file
+		input = fopen("moisture.csv","r");  //Open the input file (read)
+		if(input == NULL){  //Check if the file exist
+			printf("error 2\n");
+			exit(2);
+		}
+		FILE* output;  //output data file
+		output = fopen(output_fname, "w");  //Open the output file (write)
+		if(output == NULL){  //Check if the file exist
+			printf("error 2\n");
+			exit(2);
+		}
+		printf("moisture, %s, %d, %d\n", output_fname, ascending, sort_mode);
+		fprintf(output, "Station;Moisture\n");
+	
+		char row[30];
+		Avl* moisture_avl_tmp = NULL;  //Temporary avl tree (sorted by station)
+		Avl* moisture_avl = NULL;
+		char* station_c;
+		char* moisture_c;
+		char* token;
+		int station, moisture;
+		fgets(row, 30, input);  //remove the first line
+		while(fgets(row, 30, input) != NULL){  //while we are not in the end of a file
+			Mto* meteo = createMto();
+			token = strtok(row, ";");
+			station_c = token;
+			while(token != NULL){
+				moisture_c = token;
+				token = strtok(NULL, ";");
+			}	
+			station = atoi(station_c);
+			moisture = atoi(moisture_c);
+			meteo -> station = station;
+			meteo -> moisture = moisture;
+			meteo -> value_sorted = 2;
+			moisture_avl_tmp = insertAvl(moisture_avl_tmp, station, meteo);  // Each station have their max moisture
+		}
+		recreateAvl(&moisture_avl, moisture_avl_tmp);
+		if(ascending == 1){  //If the default mode is chosed, the moisture will be descending
+			return descending_csv_h(output, moisture_avl);
+		}
+		else{
+			return ascending_csv_h(output, moisture_avl);	
+		}
+	}
+	else if(sort_mode == 1){
+		printf("height (pas pour l'instant), %s, %d, %d\n", output_fname, ascending, sort_mode);
+	}
+	else{
+		printf("height (pas pour l'instant), %s, %d, %d\n", output_fname, ascending, sort_mode);
 	}
 	return 0;
 }
@@ -84,6 +140,9 @@ int main(int argc, char *argv[]){
 	}
 	if(strcmp(argv[1], "height.csv") == 0){
 		height(argv[2], ascending, sort_mode);
+	}
+	if(strcmp(argv[1], "moisture.csv") == 0){
+		moisture(argv[2], ascending, sort_mode);
 	}
 	return 0;
 }
