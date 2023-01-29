@@ -1,12 +1,6 @@
-#include "head.h"
+/////// AVL Functions ///////////////////////////////////////////
 
-Mto* createMto(){
-	Mto* pNew = malloc(sizeof(Mto));
-	if(pNew == NULL){  // Check if the malloc worked
-		exit(4);
-	}
-	return pNew;
-}
+#include "head.h"
 
 Avl* createAvl(int val, Mto* meteo){
 	Avl* pNew = malloc(sizeof(Avl));
@@ -183,22 +177,4 @@ void recreateAvl(Avl** pAvl, Avl* pAvl_tmp){
 		recreateAvl(pAvl, pAvl_tmp -> pLeft);
 		recreateAvl(pAvl, pAvl_tmp -> pRight);
 	}
-}
-
-int descending_csv_h(FILE* output ,Avl* pAvl){
-	if(pAvl != NULL){
-		descending_csv_h(output, pAvl -> pRight);
-		fprintf(output, "%d;%d\n", pAvl -> Meteo -> station, pAvl -> value);
-		descending_csv_h(output, pAvl -> pLeft);
-	}
-	return 0;
-}
-
-int ascending_csv_h(FILE* output ,Avl* pAvl){
-	if(pAvl != NULL){
-		ascending_csv_h(output, pAvl -> pLeft);
-		fprintf(output, "%d;%d\n", pAvl -> Meteo -> station, pAvl -> value);
-		ascending_csv_h(output, pAvl -> pRight);
-	}
-	return 0;
 }

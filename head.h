@@ -5,6 +5,7 @@
 	send it to a 'c' code to sort it depending of the value selected (code 'c' created by us),
 	the c code will create a new file and a gnu code will read it (code 'gnu' created by us).
 */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -12,7 +13,11 @@
 #include "avl_struct.h"
 #include "abr_struct.h"
 
+/////// mto Structure functions /////////////////////////////////
+
 Mto* createMto();
+
+/////// AVL Functions /////////////////////////////////////////
 
 Avl* createAvl(int val, Mto* meteo);
 
@@ -39,6 +44,13 @@ Avl* insertAvl_bis(Avl* pAvl, int val, Mto* meteo, int* h);
 Avl* insertAvl(Avl* pAvl, int a, Mto* meteo);
 
 void recreateAvl(Avl** pAvl, Avl* pAvl_tmp);
+
+/////// ABR Functions /////////////////////////////////////////
+
+
+/////// TAB Functions /////////////////////////////////////////
+
+//////// CSV File creator functions //////////////////////////////////////////////
 
 int descending_csv_h(FILE* output ,Avl* height_avl);
 
