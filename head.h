@@ -47,6 +47,19 @@ void recreateAvl(Avl** pAvl, Avl* pAvl_tmp);
 
 /////// ABR Functions /////////////////////////////////////////
 
+Abr* createAbr(int val, Mto* meteo);
+
+void infixeAbr_h(Abr* pTree);
+
+void infixeDecAbr_h(Abr* pTree);
+
+int Abr_check(Abr* pTree);
+
+int search(Abr* pTree, int a);
+
+Abr* insertAbr(Abr* pAbr, int a, Mto* meteo);
+
+void recreateAbr(Abr** pAbr, Abr* pAbr_tmp);
 
 /////// TAB Functions /////////////////////////////////////////
 
