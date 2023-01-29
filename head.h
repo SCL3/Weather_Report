@@ -1,9 +1,14 @@
 /*
-	Code created by Mohamed and SIIMOON
+	Code created by Mohamed and SIIMOON the ../../2022
+	Last update : ../../2023
+	A shell code used to read a csv file, select the data, 
+	send it to a 'c' code to sort it depending of the value selected (code 'c' created by us),
+	the c code will create a new file and a gnu code will read it (code 'gnu' created by us).
 */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "meteo_struct.h"
 #include "avl_struct.h"
 
 Mto* createMto();

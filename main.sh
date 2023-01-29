@@ -1,6 +1,6 @@
 #!bin/bash
 
-gcc -o sort sort.c
+make > /dev/null
 
 help()
 {
@@ -31,7 +31,8 @@ if [[ $1 == '--help' ]]; then
 fi
 
 
-verif=0  
+verif=0  #value that will check if the -f command is used
+verif2=0  #value that will check if the sort mode method command is used once only
 ascending=1
 sort_mode='avl'
 for i in $(seq 1 $#) ; do  #Check if the "-f" argument is used
@@ -46,24 +47,35 @@ for i in $(seq 1 $#) ; do  #Check if the "-f" argument is used
 				verif=2
 			fi
 			;;
-		'-r') ascending=0
+		'-r') ascending=0 ; echo "reversed order mode"
 			;;
-		'-avl') sort_mode="avl"
+		'-avl') sort_mode="avl" ; verif2=$(( $verif2 + 1 )) ; echo "sort mode : avl" 
 			;;
-		'-abr') sort_mode="abr"
+		'-abr') sort_mode="abr" ; verif2=$(( $verif2 + 1 )) ; echo "sort mode : abr"
 			;;
-		'-tab') sort_mode='tab'
-			;;	
+		'-tab') sort_mode="tab" ; verif2=$(( $verif2 + 1 )) ; echo "sort mode : tab"
+			;; 
 	esac	
 done
+
+###### Check the meteo file #####################################
 
 if [[ $verif -eq 0 ]]; then  #If the argument "-f" is not used :
 	echo "There is no meteo data file selected, please use -f [file_name.csv]"
 	exit 2  #Exit the program
 elif  [[ $verif -eq 2 ]]; then  #Else if the meteo data file does not exist :
-	echo "The meteo data file does not exist"
+	echo "The meteo data file '$file_name' does not exist"
 	exit 2
 fi
+
+###### Check the sort method ####################################
+
+if [[ $verif2 -ge 2 ]] ; then  #If the sort mode method command is used more than once
+	echo "Please use choose between '-avl' '-abr' '-tab'"
+	exit 2
+fi
+
+###### The main function ########################################
 
 for i in $(seq 1 $#) ; do  #Do the option for each arguments
 	ARG=${!i}  
@@ -94,10 +106,10 @@ for i in $(seq 1 $#) ; do  #Do the option for each arguments
 			;;
 		'-w') echo "Wind" ; cut -d ';' -f 1,4,5 $file_name > wind.csv #Create a csv file containing the average orientation and the average speed for each station.
 			;;
-		'-h') echo "Height" ; cut -d ';' -f 1,14 $file_name > height.csv ; ./sort height.csv height_sorted.txt $ascending $sort_mode #Create a csv file containing the height of each station.
+		'-h') echo "Height" ; cut -d ';' -f 1,14 $file_name > height.csv ; ./exec height.csv height_sorted.txt $ascending $sort_mode #Create a csv file containing the height of each station.
 			;;
-		'-m') echo "Moisture" ; cut -d ';' -f 1,6 $file_name > moisture.csv ; ./sort moisture.csv moisture_sorted.txt $ascending $sort_mode #create a csv file containing the maximum humidity for each station.
+		'-m') echo "Moisture" ; cut -d ';' -f 1,6 $file_name > moisture.csv ; ./exec moisture.csv moisture_sorted.txt $ascending $sort_mode #create a csv file containing the maximum humidity for each station.
 			;;
-		*) echo "Unknown argument, use --help for more details"  #The argument given is not treated.
+		*) echo "Unknown argument '$ARG', use --help for more details"  #The argument given is not treated.
 	esac
 done
