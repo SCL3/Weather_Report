@@ -10,6 +10,7 @@
 #include <string.h>
 #include "meteo_struct.h"
 #include "avl_struct.h"
+#include "abr_struct.h"
 
 Mto* createMto();
 
