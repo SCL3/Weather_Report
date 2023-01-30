@@ -1,0 +1,6 @@
+//////////////////////////////// NODE STRUCT ///////////////////////////////////
+
+typedef struct _node{
+    Mto *value;
+    struct _node* pnext;
+}Node;
