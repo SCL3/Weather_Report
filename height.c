@@ -12,21 +12,21 @@ int height(char* output_fname, int ascending, int sort_mode){
 	FILE* output;  //output data file
 	output = fopen(output_fname, "w");  //Open the output file (write)
 	if(output == NULL){  //Check if the file exist
-		printf("error 2\n");
-		exit(2);
+		printf("error 3\n");
+		exit(3);
 	}
 	printf("height, %s, %d, %d\n", output_fname, ascending, sort_mode);
 	fprintf(output, "Station;Height\n");
-	char row[30];
+	char row[50];
 	char* station_c;
 	char* height_c;
 	char* token;
 	int station, height;
-	fgets(row, 30, input);  //remove the first line
-	
+	float y,x; // North/South axis and East/West axis 
+	fgets(row, 50, input);  //remove the first line
 	if(sort_mode == 0){
 		Avl* height_avl = NULL;
-		while(fgets(row, 30, input) != NULL){  //while we are not in the end of a file
+		while(fgets(row, 50, input) != NULL){  //while we are not in the end of a file
 			Mto* meteo = createMto();
 			token = strtok(row, ";");
 			station_c = token;
@@ -49,7 +49,7 @@ int height(char* output_fname, int ascending, int sort_mode){
 	}
 	else if(sort_mode == 1){
 		Abr* height_abr = NULL;
-		while(fgets(row, 30, input) != NULL){  //while we are not in the end of a file
+		while(fgets(row, 50, input) != NULL){  //while we are not in the end of a file
 			Mto* meteo = createMto();
 			token = strtok(row, ";");
 			station_c = token;
@@ -73,5 +73,5 @@ int height(char* output_fname, int ascending, int sort_mode){
 	else{
 		printf("height (pas pour l'instant), %s, %d, %d\n", output_fname, ascending, sort_mode);
 	}
-	return 0;
+	//return 0;
 }

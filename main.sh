@@ -80,7 +80,6 @@ fi
 for i in $(seq 1 $#) ; do  #Do the option for each arguments
 	ARG=${!i}  
 	case $ARG in
-	
 		'-f' | $file_name | '--help' | '-r' | '-tab' | '-abr' | '-avl')  #Do nothing to avoid displaying the unknown argument statement.
 			;;
 

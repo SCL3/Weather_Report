@@ -81,6 +81,11 @@ Abr* insertAbr(Abr* pAbr, int val, Mto* meteo){  //insert a new value in the abr
 			return pAbr;  // If the value and the station is the same
 		}
 	}
+	if(meteo -> value_sorted == 2){  //Sort mode for the Moisture
+		if(meteo -> moisture > pAbr -> Meteo -> moisture){  //Replace the lowest moisture value with the highest 
+			pAbr -> Meteo -> moisture = meteo -> moisture;
+		}
+	}
     }
     return pAbr;
 }

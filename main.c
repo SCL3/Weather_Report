@@ -1,6 +1,7 @@
 #include "head.h"
 
 int main(int argc, char *argv[]){
+	int error_value;
 	if(argc < 3){  //The program needs 2 more arguments input and output file
 		printf("The program needs 2 more arguments (input and output files)\n");
 		exit(4);
@@ -28,10 +29,10 @@ int main(int argc, char *argv[]){
 		}
 	}
 	if(strcmp(argv[1], "height.csv") == 0){
-		height(argv[2], ascending, sort_mode);
+		error_value = height(argv[2], ascending, sort_mode);
 	}
 	if(strcmp(argv[1], "moisture.csv") == 0){
-		moisture(argv[2], ascending, sort_mode);
+		error_value = moisture(argv[2], ascending, sort_mode);
 	}
-	return 0;
+	return error_value;
 }
