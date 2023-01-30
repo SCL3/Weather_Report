@@ -16,29 +16,29 @@ int height(char* output_fname, int ascending, int sort_mode){
 		exit(3);
 	}
 	printf("height, %s, %d, %d\n", output_fname, ascending, sort_mode);
-	fprintf(output, "Station;Height\n");
+	fprintf(output, "Station;Height;Latitude;Longitude\n");
 	char row[50];
-	char* station_c;
+	char* station_c;  //Temporary char, used to store the char that will be transformed as an int or float
 	char* height_c;
+	char* y_c;  // North/South axis and East/West axis 
+	char* x_c;  
 	char* token;
-	int station, height;
-	float y,x; // North/South axis and East/West axis 
 	fgets(row, 50, input);  //remove the first line
 	if(sort_mode == 0){
 		Avl* height_avl = NULL;
-		while(fgets(row, 50, input) != NULL){  //while we are not in the end of a file
+		while(fgets(row, 50, input) != NULL){  //while we are not in the end of a file  
 			Mto* meteo = createMto();
-			token = strtok(row, ";");
-			station_c = token;
-			while(token != NULL){
-				height_c = token;
-				token = strtok(NULL, ";");
-			}	
-			station = atoi(station_c);
-			height = atoi(height_c);
-			meteo -> station = station;
+			station_c = strtok(row, ";");
+			y_c = strtok(NULL, ",");
+			x_c = strtok(NULL, ";");
+			height_c = strtok(NULL, ";");
+				
+			meteo -> station = atoi(station_c);  //Convert the value to put them in the meteo structure
+			meteo -> height = atoi(height_c);
+			meteo -> y = atof(y_c); 
+			meteo -> x = atof(x_c); 
 			meteo -> value_sorted = 1;
-			height_avl = insertAvl(height_avl, height, meteo);	
+			height_avl = insertAvl(height_avl, atoi(height_c), meteo);	
 		}
 		if(ascending == 1){  //If the default mode is chosed, the height will be descending
 			return descending_csv_Avl(output, height_avl);
@@ -51,17 +51,17 @@ int height(char* output_fname, int ascending, int sort_mode){
 		Abr* height_abr = NULL;
 		while(fgets(row, 50, input) != NULL){  //while we are not in the end of a file
 			Mto* meteo = createMto();
-			token = strtok(row, ";");
-			station_c = token;
-			while(token != NULL){
-				height_c = token;
-				token = strtok(NULL, ";");
-			}	
-			station = atoi(station_c);
-			height = atoi(height_c);
-			meteo -> station = station;
+			station_c = strtok(row, ";");
+			y_c = strtok(NULL, ",");
+			x_c = strtok(NULL, ";");
+			height_c = strtok(NULL, ";");
+
+			meteo -> station = atoi(station_c);  //Convert the value to put them in the meteo structure
+			meteo -> height = atoi(height_c);
+			meteo -> y = atof(y_c); 
+			meteo -> x = atof(x_c); 
 			meteo -> value_sorted = 1;
-			height_abr = insertAbr(height_abr, height, meteo);	
+			height_abr = insertAbr(height_abr, atoi(height_c), meteo);	
 		}
 		if(ascending == 1){  //If the default mode is chosed, the height will be descending
 			return descending_csv_Abr(output, height_abr);
