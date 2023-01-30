@@ -94,7 +94,7 @@ for i in $(seq 1 $#) ; do  #Do the option for each arguments
 				esac
 			;;
 		'-p'*) echo "Atmospheric pressure" ; case $ARG in   #Create a csv file depending of the mode chosen
-				'-p1') cut -d ';' -f 1,7 $file_name > atmo_pressure.csv  #Average atmospheric pressure depending of the station
+				'-p1') cut -d ';' -f 1,7 $file_name > atmo_pressure.csv ; ./exec atmopressure.csv atmopressure_sorted.txt $ascending $sort_mode  #Average atmospheric pressure depending of the station
 					;;
 				'-p2') cut -d ';' -f 2,7 $file_name > atmo_pressure.csv  #Average atmospheric pressure depending of the time
 					;;
