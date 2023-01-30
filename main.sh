@@ -1,4 +1,4 @@
-#!bin/bash
+#!/bin/bash
 
 make > /dev/null
 
@@ -71,7 +71,7 @@ fi
 ###### Check the sort method ####################################
 
 if [[ $verif2 -ge 2 ]] ; then  #If the sort mode method command is used more than once
-	echo "Please use choose between '-avl' '-abr' '-tab'"
+	echo "Please choose between '-avl' '-abr' '-tab'"
 	exit 2
 fi
 
@@ -107,7 +107,7 @@ for i in $(seq 1 $#) ; do  #Do the option for each arguments
 			;;
 		'-h') echo "Height" ; cut -d ';' -f 1,10,14 $file_name > height.csv ; ./exec height.csv height_sorted.txt $ascending $sort_mode #Create a csv file containing the height of each station.
 			;;
-		'-m') echo "Moisture" ; cut -d ';' -f 1,6 $file_name > moisture.csv ; ./exec moisture.csv moisture_sorted.txt $ascending $sort_mode #create a csv file containing the maximum humidity for each station.
+		'-m') echo "Moisture" ; cut -d ';' -f 1,6,10 $file_name > moisture.csv ; ./exec moisture.csv moisture_sorted.txt $ascending $sort_mode #create a csv file containing the maximum humidity for each station.
 			;;
 		*) echo "Unknown argument '$ARG', use --help for more details"  #The argument given is not treated.
 	esac

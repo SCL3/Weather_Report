@@ -23,7 +23,7 @@ int ascending_csv_Avl(FILE* output ,Avl* pAvl){
 int descending_csv_Abr(FILE* output ,Abr* pAbr){
 	if(pAbr != NULL){
 		descending_csv_Abr(output, pAbr -> pRight);
-		fprintf(output, "%d;%d\n", pAbr -> Meteo -> station, pAbr -> value);
+		fprintf(output, "%d;%d;%lf;%lf\n", pAbr -> Meteo -> station, pAbr -> value, pAbr -> Meteo -> y, pAbr -> Meteo -> x);
 		descending_csv_Abr(output, pAbr -> pLeft);
 	}
 	return 0;
@@ -32,7 +32,7 @@ int descending_csv_Abr(FILE* output ,Abr* pAbr){
 int ascending_csv_Abr(FILE* output ,Abr* pAbr){
 	if(pAbr != NULL){
 		ascending_csv_Abr(output, pAbr -> pLeft);
-		fprintf(output, "%d;%d\n", pAbr -> Meteo -> station, pAbr -> value);
+		fprintf(output, "%d;%d;%lf;%lf\n", pAbr -> Meteo -> station, pAbr -> value, pAbr -> Meteo -> y, pAbr -> Meteo -> x);
 		ascending_csv_Abr(output, pAbr -> pRight);
 	}
 	return 0;

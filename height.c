@@ -22,7 +22,6 @@ int height(char* output_fname, int ascending, int sort_mode){
 	char* height_c;
 	char* y_c;  // North/South axis and East/West axis 
 	char* x_c;  
-	char* token;
 	fgets(row, 50, input);  //remove the first line
 	if(sort_mode == 0){
 		Avl* height_avl = NULL;
@@ -73,5 +72,4 @@ int height(char* output_fname, int ascending, int sort_mode){
 	else{
 		printf("height (pas pour l'instant), %s, %d, %d\n", output_fname, ascending, sort_mode);
 	}
-	//return 0;
 }

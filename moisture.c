@@ -16,31 +16,37 @@ int moisture(char* output_fname, int ascending, int sort_mode){
 		exit(3);
 	}
 	printf("moisture, %s, %d, %d\n", output_fname, ascending, sort_mode);
-	fprintf(output, "Station;Moisture\n");
+	fprintf(output, "Station;Moisture;Latitude;Longitude\n");
 	char row[50];
-	char* station_c;
+	char* station_c;  //Temporary char, used to store the char that will be transformed as an int or float
 	char* moisture_c;
-	char* token;
-	int station, moisture;
+	char* y_c;  // North/South axis and East/West axis 
+	char* x_c; 
 	fgets(row, 50, input);  //remove the first line
-	
 	if(sort_mode == 0){	
 		Avl* moisture_avl_tmp = NULL;  //Temporary avl tree (sorted by station)
 		Avl* moisture_avl = NULL;
-		while(fgets(row, 50, input) != NULL){  //while we are not in the end of a file
+		while(fgets(row, 50, input) != NULL){  //while we are not in the end of a file	
 			Mto* meteo = createMto();
-			token = strtok(row, ";");
-			station_c = token;
-			while(token != NULL){
-				moisture_c = token;
-				token = strtok(NULL, ";");
-			}	
-			station = atoi(station_c);
-			moisture = atoi(moisture_c);
-			meteo -> station = station;
-			meteo -> moisture = moisture;
+			station_c = strtok(row, ";");
+			moisture_c = strtok(NULL, ";");
+			if(strchr(moisture_c, '.') != NULL){  //If the moisture case is empty
+				meteo -> moisture = 0;
+				meteo -> station = atoi(station_c);
+				y_c = strtok(moisture_c,",");
+				x_c = strtok(NULL,";");
+			}
+			else{
+				meteo -> station = atoi(station_c);
+				meteo -> moisture = atoi(moisture_c);
+				y_c = strtok(NULL, ",");
+			        x_c = strtok(NULL, ";");
+			}
+			
+			meteo -> y = atof(y_c); 
+			meteo -> x = atof(x_c); 
 			meteo -> value_sorted = 2;
-			moisture_avl_tmp = insertAvl(moisture_avl_tmp, station, meteo);  // Each station have their max moisture
+			moisture_avl_tmp = insertAvl(moisture_avl_tmp, atoi(station_c), meteo);  // Each station have their max moisture
 		}
 		recreateAvl(&moisture_avl, moisture_avl_tmp);
 		if(ascending == 1){  //If the default mode is chosed, the moisture will be descending
@@ -55,18 +61,25 @@ int moisture(char* output_fname, int ascending, int sort_mode){
 		Abr* moisture_abr = NULL;
 		while(fgets(row, 50, input) != NULL){  //while we are not in the end of a file
 			Mto* meteo = createMto();
-			token = strtok(row, ";");
-			station_c = token;
-			while(token != NULL){
-				moisture_c = token;
-				token = strtok(NULL, ";");
-			}	
-			station = atoi(station_c);
-			moisture = atoi(moisture_c);
-			meteo -> station = station;
-			meteo -> moisture = moisture;
+			station_c = strtok(row, ";");
+			moisture_c = strtok(NULL, ";");
+			if(strchr(moisture_c, '.') != NULL){  //If the moisture case is empty
+				meteo -> moisture = 0;
+				meteo -> station = atoi(station_c);
+				y_c = strtok(moisture_c,",");
+				x_c = strtok(NULL,";");
+			}
+			else{
+				meteo -> station = atoi(station_c);
+				meteo -> moisture = atoi(moisture_c);
+				y_c = strtok(NULL, ",");
+			        x_c = strtok(NULL, ";");
+			}
+			
+			meteo -> y = atof(y_c); 
+			meteo -> x = atof(x_c); 
 			meteo -> value_sorted = 2;
-			moisture_abr_tmp = insertAbr(moisture_abr_tmp, station, meteo);  // Each station have their max moisture
+			moisture_abr_tmp = insertAbr(moisture_abr_tmp, atoi(station_c), meteo);  // Each station have their max moisture
 		}
 		recreateAbr(&moisture_abr, moisture_abr_tmp);
 		if(ascending == 1){  //If the default mode is chosed, the moisture will be descending
@@ -77,7 +90,6 @@ int moisture(char* output_fname, int ascending, int sort_mode){
 		}
 	}
 	else{
-		printf("height (pas pour l'instant), %s, %d, %d\n", output_fname, ascending, sort_mode);
+		printf("moisture (pas pour l'instant), %s, %d, %d\n", output_fname, ascending, sort_mode);
 	}
-	return 0;
 }
