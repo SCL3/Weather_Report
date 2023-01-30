@@ -6,5 +6,7 @@ typedef struct{  // Meteo structure used to stock every value of a station
 	double x;  // East if positive, West otherwise
 	int height;
 	int moisture;
+	int temperature;
+	int atmopressure;
 	int value_sorted;  //The value represents the data to sort (1 : Height; 2 : Moisture; 
 }Mto;

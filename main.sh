@@ -84,7 +84,7 @@ for i in $(seq 1 $#) ; do  #Do the option for each arguments
 			;;
 
 		'-t'*) echo "Temperature" ; case $ARG in  #Create a csv file depending of the mode chosen
-				'-t1') cut -d ';' -f 1,11,12,13 $file_name > temperature.csv ; ./exec temperature.csv temperature_sorted.txt $ascending $sort_mode  #Average temperature, minimum et maximum temperature depending of the station
+				'-t1') cut -d ';' -f 1,11,12,13 $file_name > temperature.csv ; ./exec temperature.csv temperature_sorted.txt $ascending $sort_mode #Average temperature, minimum et maximum temperature depending of the station
 					;;
 				'-t2') cut -d ';' -f 2,11 $file_name > temperature.csv  #Average temperature depending of the time
 					;;
