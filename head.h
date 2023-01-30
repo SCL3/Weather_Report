@@ -12,6 +12,7 @@
 #include "meteo_struct.h"
 #include "avl_struct.h"
 #include "abr_struct.h"
+#include "node_struct.h"
 
 /////// mto Structure functions /////////////////////////////////
 
@@ -61,7 +62,7 @@ Abr* insertAbr(Abr* pAbr, int a, Mto* meteo);
 
 void recreateAbr(Abr** pAbr, Abr* pAbr_tmp);
 
-/////// TAB Functions /////////////////////////////////////////
+/////// Node Functions /////////////////////////////////////////
 
 //////// CSV File creator functions //////////////////////////////////////////////
 
