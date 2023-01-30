@@ -65,6 +65,16 @@ void recreateAbr(Abr** pAbr, Abr* pAbr_tmp);
 
 //////// CSV File creator functions //////////////////////////////////////////////
 
-int descending_csv_h(FILE* output ,Avl* height_avl);
+int descending_csv_Avl(FILE* output ,Avl* height_avl);
 
-int ascending_csv_h(FILE* output ,Avl* height_avl);
+int ascending_csv_Avl(FILE* output ,Avl* height_avl);
+
+int descending_csv_Abr(FILE* output ,Abr* pAbr);
+
+int ascending_csv_Abr(FILE* output ,Abr* pAbr);
+
+////// Functions to sort a specific data /////////////////////////////////////////////////
+
+int height(char* output_fname, int ascending, int sort_mode);
+
+int moisture(char* output_fname, int ascending, int sort_mode);

@@ -139,7 +139,7 @@ Avl* insertAvl_bis(Avl* pAvl, int val, Mto* meteo, int* h){
 			else if(meteo -> station > pAvl -> Meteo -> station){
 				pAvl -> pRight = insertAvl_bis(pAvl -> pRight, val, meteo, h);
 			}
-			else {  //if the height value and the station is the same
+			else {  //if the value and the station is the same
 				*h=0;
 				return pAvl;
 			}

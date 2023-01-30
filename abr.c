@@ -59,17 +59,30 @@ int search(Abr* pTree, int a){
     }
 }
 
-Abr* insertAbr(Abr* pTree, int val, Mto* meteo){
-    if(pTree == NULL){
+Abr* insertAbr(Abr* pAbr, int val, Mto* meteo){  //insert a new value in the abr
+    if(pAbr == NULL){
         return createAbr(val, meteo);
     }
-    if(val < pTree -> value){
-        pTree -> pLeft = insertAbr(pTree -> pLeft, val, meteo);
+    else if(val < pAbr -> value){
+        pAbr -> pLeft = insertAbr(pAbr -> pLeft, val, meteo);
     }
-    if(val > pTree -> value){
-        pTree -> pRight = insertAbr(pTree -> pRight, val, meteo);
+    else if(val > pAbr -> value){
+        pAbr -> pRight = insertAbr(pAbr -> pRight, val, meteo);
     }
-    return pTree;
+    else{  //if the value already exist 
+    	if(meteo -> value_sorted == 1){  //Sort mode for the Height
+		if (meteo -> station < pAbr -> Meteo -> station){
+			pAbr -> pLeft = insertAbr(pAbr -> pLeft, val, meteo);
+		}
+		else if(meteo -> station > pAbr -> Meteo -> station){
+			pAbr -> pRight = insertAbr(pAbr -> pRight, val, meteo);
+		}
+		else{
+			return pAbr;  // If the value and the station is the same
+		}
+	}
+    }
+    return pAbr;
 }
 
 
