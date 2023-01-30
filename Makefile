@@ -22,8 +22,11 @@ moisture.o: head.h moisture.c
 
 temperature.o: head.h temperature.c
 	gcc -c temperature.c -o temperature.o
+	
+atmopressure.o: head.h atmopressure.c
+	gcc -c atmopressure.c -o atmopressure.o
 
-exec: mto.o avl.o abr.o create_csv.o height.o moisture.o main.o
+exec: mto.o avl.o abr.o create_csv.o height.o moisture.o temperature.o atmopressure.o main.o
 	gcc *.o -o exec
 	
 clear:
