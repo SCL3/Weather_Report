@@ -20,6 +20,9 @@ height.o: head.h height.c
 moisture.o: head.h moisture.c
 	gcc -c moisture.c -o moisture.o
 
+temperature.o: head.h temperature.c
+	gcc -c temperature.c -o temperature.o
+
 exec: mto.o avl.o abr.o create_csv.o height.o moisture.o main.o
 	gcc *.o -o exec
 	
