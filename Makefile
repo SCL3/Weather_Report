@@ -10,6 +10,9 @@ avl.o: head.h avl.c
 	
 abr.o: head.h abr.c
 	gcc -c abr.c -o abr.o
+
+node.o: head.h node.c
+	gcc -c node.c -o node.o
 	
 create_csv.o: head.h create_csv.c
 	gcc -c create_csv.c -o create_csv.o
@@ -26,7 +29,7 @@ temperature.o: head.h temperature.c
 atmopressure.o: head.h atmopressure.c
 	gcc -c atmopressure.c -o atmopressure.o
 
-exec: mto.o avl.o abr.o create_csv.o height.o moisture.o temperature.o atmopressure.o main.o
+exec: mto.o avl.o abr.o node.o create_csv.o height.o moisture.o temperature.o atmopressure.o main.o
 	gcc *.o -o exec
 	
 clear:

@@ -93,7 +93,7 @@ Abr* insertAbr(Abr* pAbr, int val, Mto* meteo){  //insert a new value in the abr
 
 void recreateAbr(Abr** pAbr, Abr* pAbr_tmp){
 	if(pAbr_tmp != NULL){
-		pAbr_tmp -> Meteo -> value_sorted = 1;  //Change the value to recreate the Avl tree with the Height sort method
+		pAbr_tmp -> Meteo -> value_sorted = 1;  //Change the value to recreate the Abr tree with the Height sort method
 		*pAbr = insertAbr(*pAbr, pAbr_tmp -> Meteo -> moisture, pAbr_tmp -> Meteo);
 		recreateAbr(pAbr, pAbr_tmp -> pLeft);
 		recreateAbr(pAbr, pAbr_tmp -> pRight);

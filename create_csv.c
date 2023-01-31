@@ -37,3 +37,11 @@ int ascending_csv_Abr(FILE* output ,Abr* pAbr){
 	}
 	return 0;
 }
+
+int csv_Node(FILE* output ,Node* pHead){
+	if(pHead != NULL){
+		fprintf(output, "%d;%d;%lf;%lf\n", pHead -> Meteo -> station, pHead -> value, pHead -> Meteo -> y, pHead -> Meteo -> x);
+		csv_Node(output, pHead -> pNext);
+	}
+	return 0;
+}

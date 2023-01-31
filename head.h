@@ -22,9 +22,9 @@ Mto* createMto();
 
 Avl* createAvl(int val, Mto* meteo);
 
-void infixeAvl_h(Avl* pTree);
+void infixeAvl_h(Avl* pTree);  //Display function
 
-void infixeDecAvl_h(Avl* pTree);
+void infixeDecAvl_h(Avl* pTree);  //Display function
 
 int max(int val1, int val2, int val3);
 
@@ -50,19 +50,31 @@ void recreateAvl(Avl** pAvl, Avl* pAvl_tmp);
 
 Abr* createAbr(int val, Mto* meteo);
 
-void infixeAbr_h(Abr* pTree);
+void infixeAbr_h(Abr* pTree);  //Display function
 
-void infixeDecAbr_h(Abr* pTree);
+void infixeDecAbr_h(Abr* pTree);  //Display function
 
-int Abr_check(Abr* pTree);
+int Abr_check(Abr* pTree);  //Display function
 
-int search(Abr* pTree, int a);
+int search(Abr* pTree, int a);  //Display function
 
 Abr* insertAbr(Abr* pAbr, int a, Mto* meteo);
 
 void recreateAbr(Abr** pAbr, Abr* pAbr_tmp);
 
 /////// Node Functions /////////////////////////////////////////
+
+Node* createNode(int val, Mto* meteo);
+
+Node* asc_insertNode(Node* pHead, int val, Mto* meteo);
+
+Node* desc_insertNode(Node* pHead, int val, Mto* meteo);
+
+void desc_recreateNode(Node** pHead, Node* pHead_tmp);
+
+void asc_recreateNode(Node** pHead, Node* pHead_tmp);
+
+void displayList(Node* pHead);
 
 //////// CSV File creator functions //////////////////////////////////////////////
 
@@ -73,6 +85,8 @@ int ascending_csv_Avl(FILE* output ,Avl* height_avl);
 int descending_csv_Abr(FILE* output ,Abr* pAbr);
 
 int ascending_csv_Abr(FILE* output ,Abr* pAbr);
+
+int csv_Node(FILE* output ,Node* pHead);
 
 ////// Functions to sort a specific data /////////////////////////////////////////////////
 
