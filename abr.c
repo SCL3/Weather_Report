@@ -110,10 +110,10 @@ Abr* insertAbr(Abr* pAbr, int val, Mto* meteo){  //insert a new value in the abr
 			if(meteo -> temp_or_pres == -9999){  //If there is no meteo data
 				return pAbr;
 			}  
-			if(meteo -> min_value < pAbr -> Meteo -> min_value){  //Replace the highest value with the lowest 
+			if(meteo -> min_value < pAbr -> Meteo -> min_value || pAbr -> Meteo -> min_value == -9999){  //Replace the highest value with the lowest, the value can be created with the value -9999 !
 				pAbr -> Meteo -> min_value = meteo -> min_value;
 			}
-			if(meteo -> max_value > pAbr -> Meteo -> max_value){  //Replace the lowest value with the highest 
+			if(meteo -> max_value > pAbr -> Meteo -> max_value || pAbr -> Meteo -> max_value == -9999){  //Replace the lowest value with the highest 
 				pAbr -> Meteo -> max_value = meteo -> max_value;
 			}
 			pAbr -> Meteo -> temp_or_pres += meteo -> temp_or_pres;  //Add the temperature (or pressure), to make a total 

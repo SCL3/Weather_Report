@@ -180,10 +180,10 @@ Avl* insertAvl_bis(Avl* pAvl, int val, Mto* meteo, int* h){
 				*h=0;
 				return pAvl;
 			}  
-			if(meteo -> min_value < pAvl -> Meteo -> min_value){  //Replace the highest value with the lowest 
+			if(meteo -> min_value < pAvl -> Meteo -> min_value  || pAvl -> Meteo -> min_value == -9999){  //Replace the highest value with the lowest, the value can be created with the value -9999 !
 				pAvl -> Meteo -> min_value = meteo -> min_value;
 			}
-			if(meteo -> max_value > pAvl -> Meteo -> max_value){  //Replace the lowest value with the highest 
+			if(meteo -> max_value > pAvl -> Meteo -> max_value || pAvl -> Meteo -> max_value == -9999){  //Replace the lowest value with the highest 
 				pAvl -> Meteo -> max_value = meteo -> max_value;
 			}
 			pAvl -> Meteo -> temp_or_pres += meteo -> temp_or_pres;  //Add the temperature (or pressure), to make a total 

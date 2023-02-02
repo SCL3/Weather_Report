@@ -67,10 +67,10 @@ Node* asc_insertNode(Node* pHead, int val, Mto* meteo){  //Node will be sorted i
 			if(meteo -> temp_or_pres == -9999){  //If there is no meteo data
 				return pHead;
 			}  
-			if(meteo -> min_value < pHead -> Meteo -> min_value){  //Replace the highest value with the lowest 
+			if(meteo -> min_value < pHead -> Meteo -> min_value || pHead -> Meteo -> min_value == -9999){  //Replace the highest value with the lowest, the value can be created with the value -9999 !
 				pHead -> Meteo -> min_value = meteo -> min_value;
 			}
-			if(meteo -> max_value > pHead -> Meteo -> max_value){  //Replace the lowest value with the highest 
+			if(meteo -> max_value > pHead -> Meteo -> max_value || pHead -> Meteo -> max_value == -9999){  //Replace the lowest value with the highest 
 				pHead -> Meteo -> max_value = meteo -> max_value;
 			}
 			pHead -> Meteo -> temp_or_pres += meteo -> temp_or_pres;  //Add the temperature (or pressure), to make a total 
@@ -141,10 +141,10 @@ Node* desc_insertNode(Node* pHead, int val, Mto* meteo){  //Node will be sorted 
 			if(meteo -> temp_or_pres == -9999){  //If there is no meteo data
 				return pHead;
 			}  
-			if(meteo -> min_value < pHead -> Meteo -> min_value){  //Replace the highest value with the lowest 
+			if(meteo -> min_value < pHead -> Meteo -> min_value || pHead -> Meteo -> min_value == -9999){  //Replace the highest value with the lowest, the value can be created with the value -9999 !
 				pHead -> Meteo -> min_value = meteo -> min_value;
 			}
-			if(meteo -> max_value > pHead -> Meteo -> max_value){  //Replace the lowest value with the highest 
+			if(meteo -> max_value > pHead -> Meteo -> max_value || pHead -> Meteo -> max_value == -9999){  //Replace the lowest value with the highest 
 				pHead -> Meteo -> max_value = meteo -> max_value;
 			}
 			pHead -> Meteo -> temp_or_pres += meteo -> temp_or_pres;  //Add the temperature (or pressure), to make a total 

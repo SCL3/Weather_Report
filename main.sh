@@ -102,7 +102,7 @@ for i in $(seq 1 $#) ; do  #Do the option for each arguments
 		'-f' | $file_name | '--help' | '-r' | '-tab' | '-abr' | '-avl')  #Do nothing to avoid displaying the unknown argument statement.
 			;;
 
-		'-t'*) echo "Temperature" ; case $ARG in  #Create a csv file depending of the mode chosen
+		'-t'*) case $ARG in  #Create a csv file depending of the mode chosen
 				'-t1') cut -d ';' -f 1,10,11 $file_name > temperature.csv ; ./exec temperature.csv temperature_sorted.txt $ascending $sort_mode #Average temperature, minimum et maximum temperature depending of the station
 					;;
 				'-t2') cut -d ';' -f 2,11 $file_name > temperature.csv  #Average temperature depending of the time
@@ -112,12 +112,12 @@ for i in $(seq 1 $#) ; do  #Do the option for each arguments
 				*) echo "Unknown option '$ARG', please choose between '-t1' '-t2' '-t3', use --help for more details"	
 				esac
 			;;
-		'-p'*) echo "Atmospheric pressure" ; case $ARG in   #Create a csv file depending of the mode chosen
-				'-p1') cut -d ';' -f 1,7 $file_name > atmo_pressure.csv ; ./exec atmopressure.csv atmopressure_sorted.txt $ascending $sort_mode  #Average atmospheric pressure depending of the station
+		'-p'*) case $ARG in   #Create a csv file depending of the mode chosen
+				'-p1') cut -d ';' -f 1,7,10 $file_name > pressure.csv ; ./exec pressure.csv pressure_sorted.txt $ascending $sort_mode  #Average atmospheric pressure depending of the station
 					;;
-				'-p2') cut -d ';' -f 2,7 $file_name > atmo_pressure.csv  #Average atmospheric pressure depending of the time
+				'-p2') cut -d ';' -f 2,7 $file_name > pressure.csv  #Average atmospheric pressure depending of the time
 					;;
-				'-p3') cut -d ';' -f 1,2,7 $file_name > atmo_pressure.csv  #Average atmospheric pressure depending of the time and the station
+				'-p3') cut -d ';' -f 1,2,7 $file_name > pressure.csv  #Average atmospheric pressure depending of the time and the station
 					;;
 				*) echo "Unknown option '$ARG', please choose between '-p1' '-p2' '-p3', use --help for more details"	
 				esac

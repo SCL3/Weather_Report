@@ -42,5 +42,8 @@ int main(int argc, char *argv[]){
 	if(strcmp(argv[1], "temperature.csv") == 0){
 		error_value = temperature(argv[2], ascending, sort_mode);
 	}
+	if(strcmp(argv[1], "pressure.csv") == 0){
+		error_value = pressure(argv[2], ascending, sort_mode);
+	}
 	return error_value;
 }

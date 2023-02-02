@@ -64,13 +64,13 @@ int temperature(char* output_fname, int ascending, int sort_mode){
 			temperature_c = strtok(NULL, ";");
 			meteo -> station= atoi(station_c);  //Convert the value to put them in the meteo structure
 			meteo -> temp_or_pres = atof(temperature_c);
-			meteo -> min_value = meteo -> temp_or_pres;  //These value will be compared between the min/max value of his station
-			meteo -> max_value = meteo -> temp_or_pres; 
 			meteo -> y = atof(y_c); 
 			meteo -> x = atof(x_c);
 			if(strchr(temperature_c, '.') == NULL){  //If there is no temperature
 				meteo -> temp_or_pres = -9999;  //give the temperature an impossible value, because there is no data
 			}
+			meteo -> min_value = meteo -> temp_or_pres;  //These value will be compared between the min/max value of his station
+			meteo -> max_value = meteo -> temp_or_pres; 
 			meteo -> counter = 1; 
 			meteo -> value_sorted = 4;  //Temperature data
 			temperature_abr = insertAbr(temperature_abr, meteo -> station, meteo);
