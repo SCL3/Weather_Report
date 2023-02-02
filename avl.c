@@ -175,6 +175,22 @@ Avl* insertAvl_bis(Avl* pAvl, int val, Mto* meteo, int* h){
 			*h=0;
 			return pAvl;
 		}
+		else if(meteo -> value_sorted == 4){  //Sort mode for the Temperature (or Pression)
+			if(meteo -> temp_or_pres == -9999){  //If there is no meteo data
+				*h=0;
+				return pAvl;
+			}  
+			if(meteo -> min_value < pAvl -> Meteo -> min_value){  //Replace the highest value with the lowest 
+				pAvl -> Meteo -> min_value = meteo -> min_value;
+			}
+			if(meteo -> max_value > pAvl -> Meteo -> max_value){  //Replace the lowest value with the highest 
+				pAvl -> Meteo -> max_value = meteo -> max_value;
+			}
+			pAvl -> Meteo -> temp_or_pres += meteo -> temp_or_pres;  //Add the temperature (or pressure), to make a total 
+			pAvl -> Meteo -> counter += 1; 
+			*h=0;
+			return pAvl;
+		}
 	}
 	if(*h != 0){  //If there is a change in the avl
 		pAvl -> balance = pAvl -> balance + *h;
@@ -196,10 +212,17 @@ Avl* insertAvl(Avl* pAvl, int a, Mto* meteo){
 
 Avl* averageAvl(Avl* pAvl){
 	if(pAvl != NULL){
-		pAvl -> Meteo -> wind_direction /= pAvl -> Meteo -> counter_direction;
-		pAvl -> Meteo -> wind_speed /= pAvl -> Meteo -> counter_speed;
-		pAvl -> pLeft = averageAvl(pAvl -> pLeft);
-		pAvl -> pRight = averageAvl(pAvl -> pRight);
+		if(pAvl -> Meteo -> value_sorted == 3){
+			pAvl -> Meteo -> wind_direction /= pAvl -> Meteo -> counter_direction;
+			pAvl -> Meteo -> wind_speed /= pAvl -> Meteo -> counter_speed;
+			pAvl -> pLeft = averageAvl(pAvl -> pLeft);
+			pAvl -> pRight = averageAvl(pAvl -> pRight);
+		}
+		else if(pAvl -> Meteo -> value_sorted == 4){
+			pAvl -> Meteo -> temp_or_pres /= pAvl -> Meteo -> counter;
+			pAvl -> pLeft = averageAvl(pAvl -> pLeft);
+			pAvl -> pRight = averageAvl(pAvl -> pRight);
+		}
 		return pAvl;
 	}
 }

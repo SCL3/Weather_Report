@@ -106,16 +106,36 @@ Abr* insertAbr(Abr* pAbr, int val, Mto* meteo){  //insert a new value in the abr
 			pAbr -> Meteo -> counter_speed += 1; 
 			return pAbr;
 		}
-    }
+	else if(meteo -> value_sorted == 4){  //Sort mode for the Temperature (or Pression)
+			if(meteo -> temp_or_pres == -9999){  //If there is no meteo data
+				return pAbr;
+			}  
+			if(meteo -> min_value < pAbr -> Meteo -> min_value){  //Replace the highest value with the lowest 
+				pAbr -> Meteo -> min_value = meteo -> min_value;
+			}
+			if(meteo -> max_value > pAbr -> Meteo -> max_value){  //Replace the lowest value with the highest 
+				pAbr -> Meteo -> max_value = meteo -> max_value;
+			}
+			pAbr -> Meteo -> temp_or_pres += meteo -> temp_or_pres;  //Add the temperature (or pressure), to make a total 
+			pAbr -> Meteo -> counter += 1; 
+		}
+	}
     return pAbr;
 }
 
 Abr* averageAbr(Abr* pAbr){
 	if(pAbr != NULL){
-		pAbr -> Meteo -> wind_direction /= pAbr -> Meteo -> counter_direction;
-		pAbr -> Meteo -> wind_speed /= pAbr -> Meteo -> counter_speed;
-		pAbr -> pLeft = averageAbr(pAbr -> pLeft);
-		pAbr -> pRight = averageAbr(pAbr -> pRight);
+		if(pAbr -> Meteo -> value_sorted == 3){
+			pAbr -> Meteo -> wind_direction /= pAbr -> Meteo -> counter_direction;
+			pAbr -> Meteo -> wind_speed /= pAbr -> Meteo -> counter_speed;
+			pAbr -> pLeft = averageAbr(pAbr -> pLeft);
+			pAbr -> pRight = averageAbr(pAbr -> pRight);
+		}
+		else if(pAbr -> Meteo -> value_sorted == 4){
+			pAbr -> Meteo -> temp_or_pres /= pAbr -> Meteo -> counter;
+			pAbr -> pLeft = averageAbr(pAbr -> pLeft);
+			pAbr -> pRight = averageAbr(pAbr -> pRight);
+		}
 		return pAbr;
 	}
 }

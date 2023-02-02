@@ -1,16 +1,22 @@
 //////////////////// METEO STRUCTURE ////////////////////////////////////////////////////////
 
 typedef struct{  // Meteo structure used to stock every value of a station
-	int station;
+	int station;  //Station
 	double y;  // North if positive, South otherwise
 	double x;  // East if positive, West otherwise
-	double wind_direction; 
+	
+	double wind_direction;  //Wind 
 	double wind_speed;
-	int height;
-	int moisture;
 	int counter_direction;
 	int counter_speed;
-	int temperature;
-	int atmopressure;
-	int value_sorted;  //The value represents the data to sort (1 : Height; 2 : Moisture; 3 : Wind ;
+	
+	int height;  //Height
+	
+	int moisture;  //Moisture
+	
+	double temp_or_pres;  //Temperature or atmospheric pressure
+	double min_value;
+	double max_value;
+	int counter;
+	int value_sorted;  //The value represents the data to sort (1 : Height (Moisture); 2 : Moisture; 3 : Wind ; 4 : Temperature and Atmospheric Pressure
 }Mto;

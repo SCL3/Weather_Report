@@ -63,6 +63,19 @@ Node* asc_insertNode(Node* pHead, int val, Mto* meteo){  //Node will be sorted i
 			pHead -> Meteo -> counter_speed += 1; 
 			return pHead;
 		}
+		else if(meteo -> value_sorted == 4){  //Sort mode for the Temperature (or Pression)
+			if(meteo -> temp_or_pres == -9999){  //If there is no meteo data
+				return pHead;
+			}  
+			if(meteo -> min_value < pHead -> Meteo -> min_value){  //Replace the highest value with the lowest 
+				pHead -> Meteo -> min_value = meteo -> min_value;
+			}
+			if(meteo -> max_value > pHead -> Meteo -> max_value){  //Replace the lowest value with the highest 
+				pHead -> Meteo -> max_value = meteo -> max_value;
+			}
+			pHead -> Meteo -> temp_or_pres += meteo -> temp_or_pres;  //Add the temperature (or pressure), to make a total 
+			pHead -> Meteo -> counter += 1; 
+		}
    	}
 	else if(pHead -> pNext == NULL){ // Check if there is only 1 node
      		pHead -> pNext = createNode(val, meteo);
@@ -124,6 +137,19 @@ Node* desc_insertNode(Node* pHead, int val, Mto* meteo){  //Node will be sorted 
 			pHead -> Meteo -> counter_speed += 1; 
 			return pHead;
 		}
+		else if(meteo -> value_sorted == 4){  //Sort mode for the Temperature (or Pression)
+			if(meteo -> temp_or_pres == -9999){  //If there is no meteo data
+				return pHead;
+			}  
+			if(meteo -> min_value < pHead -> Meteo -> min_value){  //Replace the highest value with the lowest 
+				pHead -> Meteo -> min_value = meteo -> min_value;
+			}
+			if(meteo -> max_value > pHead -> Meteo -> max_value){  //Replace the lowest value with the highest 
+				pHead -> Meteo -> max_value = meteo -> max_value;
+			}
+			pHead -> Meteo -> temp_or_pres += meteo -> temp_or_pres;  //Add the temperature (or pressure), to make a total 
+			pHead -> Meteo -> counter += 1; 
+		}
 		
    	}
 	else if(pHead -> pNext == NULL){ // Check if there is only 1 node
@@ -154,9 +180,15 @@ void asc_recreateNode(Node** pHead, Node* pHead_tmp){
 
 Node* averageNode(Node* pHead){
 	if(pHead != NULL){
-		pHead -> Meteo -> wind_direction /= pHead -> Meteo -> counter_direction;
-		pHead -> Meteo -> wind_speed /= pHead -> Meteo -> counter_speed;
-		pHead -> pNext = averageNode(pHead -> pNext);
+		if(pHead -> Meteo -> value_sorted == 3){
+			pHead -> Meteo -> wind_direction /= pHead -> Meteo -> counter_direction;
+			pHead -> Meteo -> wind_speed /= pHead -> Meteo -> counter_speed;
+			pHead -> pNext = averageNode(pHead -> pNext);
+		}
+		else if(pHead -> Meteo -> value_sorted == 4){
+			pHead -> Meteo -> temp_or_pres /= pHead -> Meteo -> counter;
+			pHead -> pNext = averageNode(pHead -> pNext);
+		}
 		return pHead;
 	}
 }

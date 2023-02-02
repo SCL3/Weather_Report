@@ -25,7 +25,7 @@ int atmopressure(char* output_fname, int ascending, int sort_mode){
 	char* token;
 	fgets(row, 50, input);  //remove the first line
 	if(sort_mode == 0){
-		Avl* atmopressure_avl = NULL;
+		/*Avl* atmopressure_avl = NULL;
 		while(fgets(row, 50, input) != NULL){  //while we are not in the end of a file  
 			Mto* meteo = createMto();
 			station_c = strtok(row, ";");
@@ -45,10 +45,10 @@ int atmopressure(char* output_fname, int ascending, int sort_mode){
 		}
 		else{
 			return ascending_csv_Avl(output, atmopressure_avl);	
-		}
+		}*/
 	}
 	else if(sort_mode == 1){
-		Abr* atmopressure_abr = NULL;
+		/*Abr* atmopressure_abr = NULL;
 		while(fgets(row, 50, input) != NULL){  //while we are not in the end of a file
 			Mto* meteo = createMto();
 			station_c = strtok(row, ";");
@@ -68,10 +68,9 @@ int atmopressure(char* output_fname, int ascending, int sort_mode){
 		}
 		else{
 			return ascending_csv_Abr(output, atmopressure_abr);	
-		}
+		}*/
 	}
 	else{
 		printf("height (pas pour l'instant), %s, %d, %d\n", output_fname, ascending, sort_mode);
 	}
-	//return 0;
 }

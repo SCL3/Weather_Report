@@ -187,7 +187,6 @@ int wind(char* output_fname, int ascending, int sort_mode){
 				wind_node = desc_insertNode(wind_node, meteo -> station, meteo);
 			}
 		}
-		displayList(wind_node);
 		wind_node = averageNode(wind_node);
 		return csv_Node(output, wind_node);
 	}

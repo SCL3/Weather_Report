@@ -9,7 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "meteo_struct.h"
+#include "meteo_struct.h"  //All the structure
 #include "avl_struct.h"
 #include "abr_struct.h"
 #include "node_struct.h"
@@ -101,3 +101,5 @@ int height(char* output_fname, int ascending, int sort_mode);
 int moisture(char* output_fname, int ascending, int sort_mode);
 
 int wind(char* output_fname, int ascending, int sort_mode);
+
+int temperature(char* output_fname, int ascending, int sort_mode);
