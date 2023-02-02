@@ -6,4 +6,5 @@ send it to a 'c' code to sort it depending of the value selected (code 'c' creat
 the c code will create a new file and a gnu code will read it (code 'gnu' created by us).
 
 To properly use this program, please use this command "bash main.sh -f [name of your file.csv] ..."
-Type "--help" if you need it.
+use "bash main.sh --help" if you need it.
+and use "make clear" to remove all the .o files.

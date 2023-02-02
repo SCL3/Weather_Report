@@ -62,6 +62,8 @@ int search(Abr* pTree, int a);  //Display function
 
 Abr* insertAbr(Abr* pAbr, int a, Mto* meteo);
 
+Abr* averageAbr(Abr* pAbr);
+
 void recreateAbr(Abr** pAbr, Abr* pAbr_tmp);
 
 /////// Node Functions /////////////////////////////////////////
@@ -75,6 +77,8 @@ Node* desc_insertNode(Node* pHead, int val, Mto* meteo);
 void desc_recreateNode(Node** pHead, Node* pHead_tmp);
 
 void asc_recreateNode(Node** pHead, Node* pHead_tmp);
+
+Node* averageNode(Node* pHead);
 
 void displayList(Node* pHead);
 

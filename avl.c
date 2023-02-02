@@ -151,7 +151,7 @@ Avl* insertAvl_bis(Avl* pAvl, int val, Mto* meteo, int* h){
 			*h=0;
 			return pAvl;
 		}
-		else if(meteo -> value_sorted == 3){
+		else if(meteo -> value_sorted == 3){  //Sort mode for the Wind
 			if(meteo -> wind_direction == -1 && meteo -> wind_speed == -1){  //If there is no data in the wind slot
 				*h=0;
 				return pAvl;

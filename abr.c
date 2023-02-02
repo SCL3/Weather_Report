@@ -86,10 +86,39 @@ Abr* insertAbr(Abr* pAbr, int val, Mto* meteo){  //insert a new value in the abr
 			pAbr -> Meteo -> moisture = meteo -> moisture;
 		}
 	}
+	else if(meteo -> value_sorted == 3){  //Sort mode for the Wind
+			if(meteo -> wind_direction == -1 && meteo -> wind_speed == -1){  //If there is no data in the wind slot
+				return pAbr;
+			}
+			else if(meteo -> wind_direction == -1){  //If there is only speed
+				pAbr -> Meteo -> wind_speed += meteo -> wind_speed;
+				pAbr -> Meteo -> counter_speed += 1; 
+				return pAbr;
+			}
+			else if(meteo -> wind_speed == -1){  //If there is only direction
+				pAbr -> Meteo -> wind_direction += meteo -> wind_direction;
+				pAbr -> Meteo -> counter_direction += 1; 
+				return pAbr;
+			}
+			pAbr -> Meteo -> wind_direction += meteo -> wind_direction;  //Add the speed and the direction, to make a total 
+			pAbr -> Meteo -> wind_speed += meteo -> wind_speed;
+			pAbr -> Meteo -> counter_direction += 1; 
+			pAbr -> Meteo -> counter_speed += 1; 
+			return pAbr;
+		}
     }
     return pAbr;
 }
 
+Abr* averageAbr(Abr* pAbr){
+	if(pAbr != NULL){
+		pAbr -> Meteo -> wind_direction /= pAbr -> Meteo -> counter_direction;
+		pAbr -> Meteo -> wind_speed /= pAbr -> Meteo -> counter_speed;
+		pAbr -> pLeft = averageAbr(pAbr -> pLeft);
+		pAbr -> pRight = averageAbr(pAbr -> pRight);
+		return pAbr;
+	}
+}
 
 void recreateAbr(Abr** pAbr, Abr* pAbr_tmp){
 	if(pAbr_tmp != NULL){

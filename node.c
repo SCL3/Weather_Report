@@ -43,6 +43,26 @@ Node* asc_insertNode(Node* pHead, int val, Mto* meteo){  //Node will be sorted i
 				pHead -> Meteo -> moisture = meteo -> moisture;
 			}
 		}
+		else if(meteo -> value_sorted == 3){  //Sort mode for the wind
+			if(meteo -> wind_direction == -1 && meteo -> wind_speed == -1){  //If there is no data in the wind slot
+				return pHead;
+			}
+			else if(meteo -> wind_direction == -1){  //If there is only speed
+				pHead -> Meteo -> wind_speed += meteo -> wind_speed;
+				pHead -> Meteo -> counter_speed += 1; 
+				return pHead;
+			}
+			else if(meteo -> wind_speed == -1){  //If there is only direction
+				pHead -> Meteo -> wind_direction += meteo -> wind_direction;
+				pHead -> Meteo -> counter_direction += 1; 
+				return pHead;
+			}
+			pHead -> Meteo -> wind_direction += meteo -> wind_direction;  //Add the speed and the direction, to make a total 
+			pHead -> Meteo -> wind_speed += meteo -> wind_speed;
+			pHead -> Meteo -> counter_direction += 1; 
+			pHead -> Meteo -> counter_speed += 1; 
+			return pHead;
+		}
    	}
 	else if(pHead -> pNext == NULL){ // Check if there is only 1 node
      		pHead -> pNext = createNode(val, meteo);
@@ -79,11 +99,32 @@ Node* desc_insertNode(Node* pHead, int val, Mto* meteo){  //Node will be sorted 
 				pHead -> pNext = desc_insertNode(pHead -> pNext, val, meteo);
 			}
 		}
-		if(meteo -> value_sorted == 2){  //Sort mode for the Moisture
+		else if(meteo -> value_sorted == 2){  //Sort mode for the Moisture
 			if(meteo -> moisture > pHead -> Meteo -> moisture){  //Replace the lowest moisture value with the highest 
 				pHead -> Meteo -> moisture = meteo -> moisture;
 			}
 		}
+		else if(meteo -> value_sorted == 3){  //Sort mode for the wind
+			if(meteo -> wind_direction == -1 && meteo -> wind_speed == -1){  //If there is no data in the wind slot
+				return pHead;
+			}
+			else if(meteo -> wind_direction == -1){  //If there is only speed
+				pHead -> Meteo -> wind_speed += meteo -> wind_speed;
+				pHead -> Meteo -> counter_speed += 1; 
+				return pHead;
+			}
+			else if(meteo -> wind_speed == -1){  //If there is only direction
+				pHead -> Meteo -> wind_direction += meteo -> wind_direction;
+				pHead -> Meteo -> counter_direction += 1; 
+				return pHead;
+			}
+			pHead -> Meteo -> wind_direction += meteo -> wind_direction;  //Add the speed and the direction, to make a total 
+			pHead -> Meteo -> wind_speed += meteo -> wind_speed;
+			pHead -> Meteo -> counter_direction += 1; 
+			pHead -> Meteo -> counter_speed += 1; 
+			return pHead;
+		}
+		
    	}
 	else if(pHead -> pNext == NULL){ // Check if there is only 1 node
      		pHead -> pNext = createNode(val, meteo);
@@ -111,9 +152,18 @@ void asc_recreateNode(Node** pHead, Node* pHead_tmp){
 	}
 }
 
+Node* averageNode(Node* pHead){
+	if(pHead != NULL){
+		pHead -> Meteo -> wind_direction /= pHead -> Meteo -> counter_direction;
+		pHead -> Meteo -> wind_speed /= pHead -> Meteo -> counter_speed;
+		pHead -> pNext = averageNode(pHead -> pNext);
+		return pHead;
+	}
+}
+
 void displayList(Node* pHead){
     while(pHead != NULL){
-        printf("[%d (%d)]->", pHead -> value, pHead -> Meteo -> moisture);
+        printf("[%d (%lf)]->", pHead -> value, pHead -> Meteo -> wind_direction);
         pHead = pHead -> pNext;
     }
     printf("\n");
