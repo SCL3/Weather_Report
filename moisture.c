@@ -30,19 +30,17 @@ int moisture(char* output_fname, int ascending, int sort_mode){
 			Mto* meteo = createMto();
 			station_c = strtok(row, ";");
 			moisture_c = strtok(NULL, ";");
-			if(strchr(moisture_c, '.') != NULL){  //If the moisture case is empty
+			if(strchr(moisture_c, '.') != NULL){  //If the moisture case is empty (if it's empty, the value will take the coordinates !)
 				meteo -> moisture = 0;
-				meteo -> station = atoi(station_c);
 				y_c = strtok(moisture_c,",");
 				x_c = strtok(NULL,";");
 			}
 			else{
-				meteo -> station = atoi(station_c);
 				meteo -> moisture = atoi(moisture_c);
 				y_c = strtok(NULL, ",");
 			        x_c = strtok(NULL, ";");
 			}
-			
+			meteo -> station = atoi(station_c);
 			meteo -> y = atof(y_c); 
 			meteo -> x = atof(x_c); 
 			meteo -> value_sorted = 2;
@@ -65,17 +63,15 @@ int moisture(char* output_fname, int ascending, int sort_mode){
 			moisture_c = strtok(NULL, ";");
 			if(strchr(moisture_c, '.') != NULL){  //If the moisture case is empty
 				meteo -> moisture = 0;
-				meteo -> station = atoi(station_c);
 				y_c = strtok(moisture_c,",");
 				x_c = strtok(NULL,";");
 			}
 			else{
-				meteo -> station = atoi(station_c);
 				meteo -> moisture = atoi(moisture_c);
 				y_c = strtok(NULL, ",");
 			        x_c = strtok(NULL, ";");
 			}
-			
+			meteo -> station = atoi(station_c);
 			meteo -> y = atof(y_c); 
 			meteo -> x = atof(x_c); 
 			meteo -> value_sorted = 2;
@@ -98,16 +94,15 @@ int moisture(char* output_fname, int ascending, int sort_mode){
 			moisture_c = strtok(NULL, ";");
 			if(strchr(moisture_c, '.') != NULL){  //If the moisture case is empty
 				meteo -> moisture = 0;
-				meteo -> station = atoi(station_c);
 				y_c = strtok(moisture_c,",");
 				x_c = strtok(NULL,";");
 			}
 			else{
-				meteo -> station = atoi(station_c);
 				meteo -> moisture = atoi(moisture_c);
 				y_c = strtok(NULL, ",");
 			        x_c = strtok(NULL, ";");
 			}
+			meteo -> station = atoi(station_c);
 			meteo -> y = atof(y_c); 
 			meteo -> x = atof(x_c); 
 			meteo -> value_sorted = 2;

@@ -18,7 +18,7 @@ Avl* createAvl(int val, Mto* meteo){
 void infixeAvl_h(Avl* pTree){  //ascending order
     if(pTree != NULL){
         infixeAvl_h(pTree -> pLeft);
-        printf("val : %d et eq : %d \n", pTree -> value, pTree -> balance);
+        printf("val : %d et eq : %d\n", pTree -> value, pTree -> balance);
         infixeAvl_h(pTree -> pRight);
     }
 }
@@ -144,10 +144,34 @@ Avl* insertAvl_bis(Avl* pAvl, int val, Mto* meteo, int* h){
 				return pAvl;
 			}
 		}
-		if(meteo -> value_sorted == 2){  //Sort mode for the Moisture
+		else if(meteo -> value_sorted == 2){  //Sort mode for the Moisture
 			if(meteo -> moisture > pAvl -> Meteo -> moisture){  //Replace the lowest moisture value with the highest 
 				pAvl -> Meteo -> moisture = meteo -> moisture;
 			}
+			*h=0;
+			return pAvl;
+		}
+		else if(meteo -> value_sorted == 3){
+			if(meteo -> wind_direction == -1 && meteo -> wind_speed == -1){  //If there is no data in the wind slot
+				*h=0;
+				return pAvl;
+			}
+			else if(meteo -> wind_direction == -1){  //If there is only speed
+				pAvl -> Meteo -> wind_speed += meteo -> wind_speed;
+				pAvl -> Meteo -> counter_speed += 1; 
+				*h=0;
+				return pAvl;
+			}
+			else if(meteo -> wind_speed == -1){  //If there is only direction
+				pAvl -> Meteo -> wind_direction += meteo -> wind_direction;
+				pAvl -> Meteo -> counter_direction += 1; 
+				*h=0;
+				return pAvl;
+			}
+			pAvl -> Meteo -> wind_direction += meteo -> wind_direction;  //Add the speed and the direction, to make a total 
+			pAvl -> Meteo -> wind_speed += meteo -> wind_speed;
+			pAvl -> Meteo -> counter_direction += 1; 
+			pAvl -> Meteo -> counter_speed += 1; 
 			*h=0;
 			return pAvl;
 		}
@@ -168,6 +192,16 @@ Avl* insertAvl_bis(Avl* pAvl, int val, Mto* meteo, int* h){
 Avl* insertAvl(Avl* pAvl, int a, Mto* meteo){
  	int h;
 	return insertAvl_bis(pAvl, a, meteo, &h);
+}
+
+Avl* averageAvl(Avl* pAvl){
+	if(pAvl != NULL){
+		pAvl -> Meteo -> wind_direction /= pAvl -> Meteo -> counter_direction;
+		pAvl -> Meteo -> wind_speed /= pAvl -> Meteo -> counter_speed;
+		pAvl -> pLeft = averageAvl(pAvl -> pLeft);
+		pAvl -> pRight = averageAvl(pAvl -> pRight);
+		return pAvl;
+	}
 }
 
 void recreateAvl(Avl** pAvl, Avl* pAvl_tmp){

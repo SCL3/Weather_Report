@@ -103,7 +103,7 @@ for i in $(seq 1 $#) ; do  #Do the option for each arguments
 				*) echo "Unknown option, use --help for more details"	
 				esac
 			;;
-		'-w') echo "Wind" ; cut -d ';' -f 1,4,5 $file_name > wind.csv #Create a csv file containing the average orientation and the average speed for each station.
+		'-w') cut -d ';' -f 1,4,5,10 $file_name > wind.csv ; ./exec wind.csv wind_sorted.txt $ascending $sort_mode #Create a csv file containing the average orientation and the average speed for each station.
 			;;
 		'-h') cut -d ';' -f 1,10,14 $file_name > height.csv ; ./exec height.csv height_sorted.txt $ascending $sort_mode #Create a csv file containing the height of each station.
 			;;

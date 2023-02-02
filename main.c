@@ -36,5 +36,8 @@ int main(int argc, char *argv[]){
 	if(strcmp(argv[1], "moisture.csv") == 0){
 		error_value = moisture(argv[2], ascending, sort_mode);
 	}
+	if(strcmp(argv[1], "wind.csv") == 0){
+		error_value = wind(argv[2], ascending, sort_mode);
+	}
 	return error_value;
 }

@@ -44,6 +44,8 @@ Avl* insertAvl_bis(Avl* pAvl, int val, Mto* meteo, int* h);
 
 Avl* insertAvl(Avl* pAvl, int a, Mto* meteo);
 
+Avl* averageAvl(Avl* pAvl);
+
 void recreateAvl(Avl** pAvl, Avl* pAvl_tmp);
 
 /////// ABR Functions /////////////////////////////////////////
@@ -93,3 +95,5 @@ int csv_Node(FILE* output ,Node* pHead);
 int height(char* output_fname, int ascending, int sort_mode);
 
 int moisture(char* output_fname, int ascending, int sort_mode);
+
+int wind(char* output_fname, int ascending, int sort_mode);
