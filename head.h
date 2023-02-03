@@ -102,6 +102,10 @@ int moisture(char* output_fname, int ascending, int sort_mode);
 
 int wind(char* output_fname, int ascending, int sort_mode);
 
-int temperature(char* output_fname, int ascending, int sort_mode);
+int temperature1(char* output_fname, int ascending, int sort_mode);
 
-int pressure(char* output_fname, int ascending, int sort_mode);
+int pressure1(char* output_fname, int ascending, int sort_mode);
+
+int temperature2(char* output_fname, int ascending, int sort_mode);
+
+int pressure2(char* output_fname, int ascending, int sort_mode);

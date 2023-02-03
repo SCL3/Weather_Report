@@ -2,9 +2,9 @@
 
 #include "head.h"
 
-int pressure(char* output_fname, int ascending, int sort_mode){
+int pressure1(char* output_fname, int ascending, int sort_mode){
 	FILE* input;  //input data file
-	input = fopen("pressure.csv","r");  //Open the input file (read)
+	input = fopen("pressure1.csv","r");  //Open the input file (read)
 	if(input == NULL){  //Check if the file exist
 		printf("error 2\n");
 		exit(2);
@@ -15,7 +15,7 @@ int pressure(char* output_fname, int ascending, int sort_mode){
 		printf("error 3\n");
 		exit(3);
 	}
-	printf("atomspheric pressure, %s, %d, %d\n", output_fname, ascending, sort_mode);
+	printf("atomspheric pressure1, %s, %d, %d\n", output_fname, ascending, sort_mode);
 	fprintf(output, "Station;min Pression;max Pression;average Pression;Latitude;Longitude\n");
 	char row[50];
 	char* station_c;  //Temporary char, used to store the char that will be transformed as an int or float
@@ -122,4 +122,8 @@ int pressure(char* output_fname, int ascending, int sort_mode){
 		pressure_node = averageNode(pressure_node);
 		return csv_Node(output, pressure_node);
 	}
+}
+
+int pressure2(char* output_fname, int ascending, int sort_mode){
+
 }
