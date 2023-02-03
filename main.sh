@@ -135,9 +135,9 @@ for i in $(seq 1 $#) ; do  #Do the option for each arguments
 			;;
 
 		'-t'*) case $ARG in  #Create a csv file depending of the mode chosen
-				'-t1') cut -d ';' -f 1,10,11 $file_name > temperature1.csv ; ./exec temperature1.csv temperature1_sorted.txt $ascending $sort_mode #Average temperature, minimum et maximum temperature depending of the station
+				'-t1') cut -d ';' -f 1,10,11 $file_name > temperature1.csv ; ./exec temperature1.csv temperature1_sorted.txt $ascending $sort_mode ; gnuplot gnu_temperature1.gnu #Average temperature, minimum et maximum temperature depending of the station
 					;;
-				'-t2') cut -d ';' -f 2,11 $file_name > temperature2.csv ; ./exec temperature2.csv temperature2_sorted.txt $ascending $sort_mode #Average temperature depending of the time
+				'-t2') cut -d ';' -f 2,11 $file_name > temperature2.csv ; ./exec temperature2.csv temperature2_sorted.txt $ascending $sort_mode ; gnuplot gnu_temperature2.gnu #Average temperature depending of the time
 					;;
 				'-t3') cut -d ';' -f 1,2,11 $file_name > temperature3.csv ; ./exec temperature3.csv temperature3_sorted.txt $ascending $sort_mode #Average temperature depending of the time and the station
 					;;
@@ -145,9 +145,9 @@ for i in $(seq 1 $#) ; do  #Do the option for each arguments
 				esac
 			;;
 		'-p'*) case $ARG in   #Create a csv file depending of the mode chosen
-				'-p1') cut -d ';' -f 1,7,10 $file_name > pressure1.csv ; ./exec pressure1.csv pressure1_sorted.txt $ascending $sort_mode  #Average atmospheric pressure depending of the station
+				'-p1') cut -d ';' -f 1,7,10 $file_name > pressure1.csv ; ./exec pressure1.csv pressure1_sorted.txt $ascending $sort_mode ; gnuplot gnu_pressure1.gnu  #Average atmospheric pressure depending of the station
 					;;
-				'-p2') cut -d ';' -f 2,7 $file_name > pressure2.csv ; ./exec pressure2.csv pressure2_sorted.txt $ascending $sort_mode  #Average atmospheric pressure depending of the time
+				'-p2') cut -d ';' -f 2,7 $file_name > pressure2.csv ; ./exec pressure2.csv pressure2_sorted.txt $ascending $sort_mode ; gnuplot gnu_pressure2.gnu  #Average atmospheric pressure depending of the time
 					;;
 				'-p3') cut -d ';' -f 1,2,7 $file_name > pressure3.csv  #Average atmospheric pressure depending of the time and the station
 					;;
@@ -156,9 +156,9 @@ for i in $(seq 1 $#) ; do  #Do the option for each arguments
 			;;
 		'-w') cut -d ';' -f 1,4,5,10 $file_name > wind.csv ; ./exec wind.csv wind_sorted.txt $ascending $sort_mode #Create a csv file containing the average orientation and the average speed for each station.
 			;;
-		'-h') cut -d ';' -f 1,10,14 $file_name > height.csv ; ./exec height.csv height_sorted.txt $ascending $sort_mode #Create a csv file containing the height of each station.
+		'-h') cut -d ';' -f 1,10,14 $file_name > height.csv ; ./exec height.csv height_sorted.txt $ascending $sort_mode ; gnuplot gnu_height.gnu  #Create a csv file containing the height of each station.
 			;;
-		'-m') cut -d ';' -f 1,6,10 $file_name > moisture.csv ; ./exec moisture.csv moisture_sorted.txt $ascending $sort_mode #create a csv file containing the maximum humidity for each station.
+		'-m') cut -d ';' -f 1,6,10 $file_name > moisture.csv ; ./exec moisture.csv moisture_sorted.txt $ascending $sort_mode ; gnuplot gnu_moisture.gnu #create a csv file containing the maximum humidity for each station.
 			;;
 		*) echo "Unknown argument '$ARG', use --help for more details"  #The argument given is not treated.
 	esac
