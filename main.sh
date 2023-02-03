@@ -113,9 +113,9 @@ for i in $(seq 1 $#) ; do  #Do the option for each arguments
 		'-t'*) case $ARG in  #Create a csv file depending of the mode chosen
 				'-t1') cut -d ';' -f 1,10,11 $file_name > temperature1.csv ; ./exec temperature1.csv temperature1_sorted.txt $ascending $sort_mode #Average temperature, minimum et maximum temperature depending of the station
 					;;
-				'-t2') cut -d ';' -f 1,2,10,11 $file_name > temperature2.csv ; ./exec temperature2.csv temperature2_sorted.txt $ascending $sort_mode #Average temperature depending of the time
+				'-t2') cut -d ';' -f 2,11 $file_name > temperature2.csv ; ./exec temperature2.csv temperature2_sorted.txt $ascending $sort_mode #Average temperature depending of the time
 					;;
-				'-t3') cut -d ';' -f 1,2,11 $file_name > temperature3.csv  #Average temperature depending of the time and the station
+				'-t3') cut -d ';' -f 1,2,11 $file_name > temperature3.csv ; ./exec temperature3.csv temperature3_sorted.txt $ascending $sort_mode #Average temperature depending of the time and the station
 					;;
 				*) echo "Unknown option '$ARG', please choose between '-t1' '-t2' '-t3', use --help for more details"	
 				esac
@@ -123,7 +123,7 @@ for i in $(seq 1 $#) ; do  #Do the option for each arguments
 		'-p'*) case $ARG in   #Create a csv file depending of the mode chosen
 				'-p1') cut -d ';' -f 1,7,10 $file_name > pressure1.csv ; ./exec pressure1.csv pressure1_sorted.txt $ascending $sort_mode  #Average atmospheric pressure depending of the station
 					;;
-				'-p2') cut -d ';' -f 2,7 $file_name > pressure2.csv  #Average atmospheric pressure depending of the time
+				'-p2') cut -d ';' -f 2,7 $file_name > pressure2.csv ; ./exec pressure2.csv pressure2_sorted.txt $ascending $sort_mode  #Average atmospheric pressure depending of the time
 					;;
 				'-p3') cut -d ';' -f 1,2,7 $file_name > pressure3.csv  #Average atmospheric pressure depending of the time and the station
 					;;

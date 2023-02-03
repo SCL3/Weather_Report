@@ -2,6 +2,9 @@ all: exec
 main.o: head.h main.c
 	gcc -c main.c -o main.o
 
+time.o: head.h time.c
+	gcc -c time.c -o time.o
+
 mto.o: head.h mto.c
 	gcc -c mto.c -o mto.o
 	
@@ -32,7 +35,7 @@ pressure.o: head.h pressure.c
 wind.o: head.h wind.c
 	gcc -c wind.c -o wind.o
 
-exec: mto.o avl.o abr.o node.o create_csv.o height.o moisture.o temperature.o pressure.o wind.o main.o
+exec: time.o mto.o avl.o abr.o node.o create_csv.o height.o moisture.o temperature.o pressure.o wind.o main.o
 	gcc *.o -o exec
 	
 clear:

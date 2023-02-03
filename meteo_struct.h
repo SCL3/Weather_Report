@@ -18,5 +18,8 @@ typedef struct{  // Meteo structure used to stock every value of a station
 	double min_value;
 	double max_value;
 	int counter;
+	
+	Time* Time;  //Time structure
+	
 	int value_sorted;  //The value represents the data to sort (1 : Height (Moisture); 2 : Moisture; 3 : Wind ; 4 : Temperature and Atmospheric Pressure
 }Mto;

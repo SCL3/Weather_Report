@@ -105,16 +105,27 @@ Abr* insertAbr(Abr* pAbr, int val, Mto* meteo){  //insert a new value in the abr
 			pAbr -> Meteo -> counter_direction += 1; 
 			pAbr -> Meteo -> counter_speed += 1; 
 			return pAbr;
-		}
+	}
 	else if(meteo -> value_sorted == 4){  //Sort mode for the Temperature (or Pression)
+		if(meteo -> temp_or_pres == -9999){  //If there is no meteo data
+			return pAbr;
+		}  
+		if(meteo -> min_value < pAbr -> Meteo -> min_value || pAbr -> Meteo -> min_value == -9999){  //Replace the highest value with the lowest, the value can be created with the value -9999 !
+			pAbr -> Meteo -> min_value = meteo -> min_value;
+		}
+		if(meteo -> max_value > pAbr -> Meteo -> max_value || pAbr -> Meteo -> max_value == -9999){  //Replace the lowest value with the highest 
+			pAbr -> Meteo -> max_value = meteo -> max_value;
+		}
+		pAbr -> Meteo -> temp_or_pres += meteo -> temp_or_pres;  //Add the temperature (or pressure), to make a total 
+		pAbr -> Meteo -> counter += 1; 
+		}
+	else if(meteo -> value_sorted == 5){  //Sort mode for the Temperature (or Pression) about the time
 			if(meteo -> temp_or_pres == -9999){  //If there is no meteo data
 				return pAbr;
-			}  
-			if(meteo -> min_value < pAbr -> Meteo -> min_value || pAbr -> Meteo -> min_value == -9999){  //Replace the highest value with the lowest, the value can be created with the value -9999 !
-				pAbr -> Meteo -> min_value = meteo -> min_value;
 			}
-			if(meteo -> max_value > pAbr -> Meteo -> max_value || pAbr -> Meteo -> max_value == -9999){  //Replace the lowest value with the highest 
-				pAbr -> Meteo -> max_value = meteo -> max_value;
+			if(pAbr -> Meteo -> temp_or_pres == -9999){  //if the first occurrence had no data
+				pAbr -> Meteo -> temp_or_pres = meteo -> temp_or_pres;
+				return pAbr;
 			}
 			pAbr -> Meteo -> temp_or_pres += meteo -> temp_or_pres;  //Add the temperature (or pressure), to make a total 
 			pAbr -> Meteo -> counter += 1; 
@@ -131,7 +142,7 @@ Abr* averageAbr(Abr* pAbr){
 			pAbr -> pLeft = averageAbr(pAbr -> pLeft);
 			pAbr -> pRight = averageAbr(pAbr -> pRight);
 		}
-		else if(pAbr -> Meteo -> value_sorted == 4){
+		else if(pAbr -> Meteo -> value_sorted == 4 || pAbr -> Meteo -> value_sorted == 5){
 			pAbr -> Meteo -> temp_or_pres /= pAbr -> Meteo -> counter;
 			pAbr -> pLeft = averageAbr(pAbr -> pLeft);
 			pAbr -> pRight = averageAbr(pAbr -> pRight);

@@ -9,14 +9,22 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "meteo_struct.h"  //All the structure
+#include "time_struct.h"  //All the structure
+#include "meteo_struct.h"  
 #include "avl_struct.h"
 #include "abr_struct.h"
 #include "node_struct.h"
 
+
 /////// mto Structure functions /////////////////////////////////
 
 Mto* createMto();
+
+////// Time functions ////////////////////////////////////////////
+
+Time* createTime();
+
+int time_calcul(Mto* meteo);
 
 /////// AVL Functions /////////////////////////////////////////
 
@@ -104,8 +112,12 @@ int wind(char* output_fname, int ascending, int sort_mode);
 
 int temperature1(char* output_fname, int ascending, int sort_mode);
 
-int pressure1(char* output_fname, int ascending, int sort_mode);
-
 int temperature2(char* output_fname, int ascending, int sort_mode);
 
+int temperature3(char* output_fname, int ascending, int sort_mode);
+
+int pressure1(char* output_fname, int ascending, int sort_mode);
+
 int pressure2(char* output_fname, int ascending, int sort_mode);
+
+int pressure3(char* output_fname, int ascending, int sort_mode);

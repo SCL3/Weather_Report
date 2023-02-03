@@ -175,7 +175,7 @@ Avl* insertAvl_bis(Avl* pAvl, int val, Mto* meteo, int* h){
 			*h=0;
 			return pAvl;
 		}
-		else if(meteo -> value_sorted == 4){  //Sort mode for the Temperature (or Pression)
+		else if(meteo -> value_sorted == 4){  //Sort mode for the Temperature (or Pression) about the station
 			if(meteo -> temp_or_pres == -9999){  //If there is no meteo data
 				*h=0;
 				return pAvl;
@@ -190,6 +190,56 @@ Avl* insertAvl_bis(Avl* pAvl, int val, Mto* meteo, int* h){
 			pAvl -> Meteo -> counter += 1; 
 			*h=0;
 			return pAvl;
+		}
+		else if(meteo -> value_sorted == 5){  //Sort mode for the Temperature (or Pression) about the time
+			if(meteo -> temp_or_pres == -9999){  //If there is no meteo data
+				*h=0;
+				return pAvl;
+			}
+			if(pAvl -> Meteo -> temp_or_pres == -9999){  //if the first occurrence had no data
+				pAvl -> Meteo -> temp_or_pres = meteo -> temp_or_pres;
+				*h=0;
+				return pAvl;
+			}
+			pAvl -> Meteo -> temp_or_pres += meteo -> temp_or_pres;  //Add the temperature (or pressure), to make a total 
+			pAvl -> Meteo -> counter += 1; 
+			*h=0;
+			return pAvl;
+		}
+		else if(meteo -> value_sorted == 6){  //Sort mode for the Temperature (or Pression) about the time and the station
+			if(meteo -> temp_or_pres == -9999){  //If there is no meteo data
+				*h=0;
+				return pAvl;
+			}
+			if(pAvl -> Meteo -> temp_or_pres == -9999){  //if the first occurrence had no data
+				pAvl -> Meteo -> temp_or_pres = meteo -> temp_or_pres;
+				*h=0;
+				return pAvl;
+			}
+			if(meteo -> temp_or_pres < pAvl -> Meteo -> temp_or_pres){
+				pAvl->pLeft= insertAvl_bis(pAvl -> pLeft, val, meteo, h);
+				*h= -*h;
+			}
+			else if(meteo -> temp_or_pres > pAvl -> Meteo -> temp_or_pres){
+				pAvl->pRight= insertAvl_bis(pAvl -> pRight, val, meteo, h);
+			}
+			else {  //if the value and the temperature is the same
+				*h=0;
+				return pAvl;
+			}
+		}
+		else if(meteo -> value_sorted == 7){  //Sort mode for the Temperature (or Pression) about the time and the station
+			if(meteo -> Time -> value < pAvl -> Meteo -> temp_or_pres){
+				pAvl->pLeft= insertAvl_bis(pAvl -> pLeft, val, meteo, h);
+				*h= -*h;
+			}
+			else if(meteo -> Time -> value > pAvl -> Meteo -> temp_or_pres){
+				pAvl->pRight= insertAvl_bis(pAvl -> pRight, val, meteo, h);
+			}
+			else {  //if the station and the time is the same
+				*h=0;
+				return pAvl;
+			}
 		}
 	}
 	if(*h != 0){  //If there is a change in the avl
@@ -218,7 +268,7 @@ Avl* averageAvl(Avl* pAvl){
 			pAvl -> pLeft = averageAvl(pAvl -> pLeft);
 			pAvl -> pRight = averageAvl(pAvl -> pRight);
 		}
-		else if(pAvl -> Meteo -> value_sorted == 4){
+		else if(pAvl -> Meteo -> value_sorted == 4 || pAvl -> Meteo -> value_sorted == 5){
 			pAvl -> Meteo -> temp_or_pres /= pAvl -> Meteo -> counter;
 			pAvl -> pLeft = averageAvl(pAvl -> pLeft);
 			pAvl -> pRight = averageAvl(pAvl -> pRight);
@@ -229,9 +279,17 @@ Avl* averageAvl(Avl* pAvl){
 
 void recreateAvl(Avl** pAvl, Avl* pAvl_tmp){
 	if(pAvl_tmp != NULL){
-		pAvl_tmp -> Meteo -> value_sorted = 1;  //Change the value to recreate the Avl tree with the Height sort method
-		*pAvl = insertAvl(*pAvl, pAvl_tmp -> Meteo -> moisture, pAvl_tmp -> Meteo);
-		recreateAvl(pAvl, pAvl_tmp -> pLeft);
-		recreateAvl(pAvl, pAvl_tmp -> pRight);
+		if(pAvl_tmp -> Meteo -> value_sorted == 6){
+			pAvl_tmp -> Meteo -> value_sorted = 7;  //Change the value to recreate the Avl tree with the Height sort method
+			*pAvl = insertAvl(*pAvl, pAvl_tmp -> Meteo -> station, pAvl_tmp -> Meteo);
+			recreateAvl(pAvl, pAvl_tmp -> pLeft);
+			recreateAvl(pAvl, pAvl_tmp -> pRight);
+		}
+		else{
+			pAvl_tmp -> Meteo -> value_sorted = 1;  //Change the value to recreate the Avl tree with the Height sort method
+			*pAvl = insertAvl(*pAvl, pAvl_tmp -> Meteo -> moisture, pAvl_tmp -> Meteo);
+			recreateAvl(pAvl, pAvl_tmp -> pLeft);
+			recreateAvl(pAvl, pAvl_tmp -> pRight);
+		}
 	}
 }

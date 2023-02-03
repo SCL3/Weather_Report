@@ -7,5 +7,9 @@ Mto* createMto(){
 	if(pNew == NULL){  // Check if the malloc worked
 		exit(4);
 	}
+	pNew -> Time = malloc(sizeof(Time));
+	if(pNew -> Time == NULL){  // Check if the malloc worked
+		exit(4);
+	}
 	return pNew;
 }

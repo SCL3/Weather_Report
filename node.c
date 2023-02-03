@@ -76,6 +76,17 @@ Node* asc_insertNode(Node* pHead, int val, Mto* meteo){  //Node will be sorted i
 			pHead -> Meteo -> temp_or_pres += meteo -> temp_or_pres;  //Add the temperature (or pressure), to make a total 
 			pHead -> Meteo -> counter += 1; 
 		}
+		else if(meteo -> value_sorted == 5){  //Sort mode for the Temperature (or Pression) about the time
+			if(meteo -> temp_or_pres == -9999){  //If there is no meteo data
+				return pHead;
+			}
+			if(pHead -> Meteo -> temp_or_pres == -9999){  //if the first occurrence had no data
+				pHead -> Meteo -> temp_or_pres = meteo -> temp_or_pres;
+				return pHead;
+			}
+			pHead -> Meteo -> temp_or_pres += meteo -> temp_or_pres;  //Add the temperature (or pressure), to make a total 
+			pHead -> Meteo -> counter += 1; 
+		}
    	}
 	else if(pHead -> pNext == NULL){ // Check if there is only 1 node
      		pHead -> pNext = createNode(val, meteo);
@@ -150,6 +161,17 @@ Node* desc_insertNode(Node* pHead, int val, Mto* meteo){  //Node will be sorted 
 			pHead -> Meteo -> temp_or_pres += meteo -> temp_or_pres;  //Add the temperature (or pressure), to make a total 
 			pHead -> Meteo -> counter += 1; 
 		}
+		else if(meteo -> value_sorted == 5){  //Sort mode for the Temperature (or Pression) about the time
+			if(meteo -> temp_or_pres == -9999){  //If there is no meteo data
+				return pHead;
+			}
+			if(pHead -> Meteo -> temp_or_pres == -9999){  //if the first occurrence had no data
+				pHead -> Meteo -> temp_or_pres = meteo -> temp_or_pres;
+				return pHead;
+			}
+			pHead -> Meteo -> temp_or_pres += meteo -> temp_or_pres;  //Add the temperature (or pressure), to make a total 
+			pHead -> Meteo -> counter += 1; 
+		}
 		
    	}
 	else if(pHead -> pNext == NULL){ // Check if there is only 1 node
@@ -185,7 +207,7 @@ Node* averageNode(Node* pHead){
 			pHead -> Meteo -> wind_speed /= pHead -> Meteo -> counter_speed;
 			pHead -> pNext = averageNode(pHead -> pNext);
 		}
-		else if(pHead -> Meteo -> value_sorted == 4){
+		else if(pHead -> Meteo -> value_sorted == 4 || pHead -> Meteo -> value_sorted == 5){
 			pHead -> Meteo -> temp_or_pres /= pHead -> Meteo -> counter;
 			pHead -> pNext = averageNode(pHead -> pNext);
 		}

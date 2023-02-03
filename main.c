@@ -46,13 +46,13 @@ int main(int argc, char *argv[]){
 		error_value = temperature2(argv[2], ascending, sort_mode);
 	}
 	if(strcmp(argv[1], "temperature3.csv") == 0){
-		//error_value = temperature3(argv[2], ascending, sort_mode);
+		error_value = temperature3(argv[2], ascending, sort_mode);
 	}
 	if(strcmp(argv[1], "pressure1.csv") == 0){
 		error_value = pressure1(argv[2], ascending, sort_mode);
 	}
 	if(strcmp(argv[1], "pressure2.csv") == 0){
-		//error_value = pressure2(argv[2], ascending, sort_mode);
+		error_value = pressure2(argv[2], ascending, sort_mode);
 	}
 	if(strcmp(argv[1], "pressure3.csv") == 0){
 		//error_value = pressure3(argv[2], ascending, sort_mode);
