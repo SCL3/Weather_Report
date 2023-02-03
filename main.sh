@@ -26,17 +26,25 @@ help()
 	echo "                                                                                          3) Average atmospheric pressure depending of the time and the station"
 	echo "Exemple : bash main.sh -f meteo.csv -p1"
 	echo
-	echo "-w     Create a file containing the wind with the average direction and average wind speed for each station"
+	echo "-w      Create a file containing the wind with the average direction and average wind speed for each station"
 	echo "Exemple : bash main.sh -f meteo.csv -w"
 	echo
-	echo "-h     Create a file containing the height for each station"
+	echo "-h      Create a file containing the height for each station"
 	echo "Exemple : bash main.sh -f meteo.csv -h"
 	echo
-	echo "-m     Create a file containing the maximum moisture for each station"
+	echo "-m      Create a file containing the maximum moisture for each station"
 	echo "Exemple : bash main.sh -f meteo.csv -m"
 	echo
-	echo "-r Ascending to descending mode or descending to ascending mode"
+	echo "-r      Ascending to descending mode or descending to ascending mode"
 	echo "Exemple : bash main.sh -f meteo.csv -m -r"
+	echo
+	echo "--avl    Choose the avl sort mode, the fatest (default sort mode)"
+	echo "Exemple : bash main.sh -f meteo.csv -m --avl"
+	echo
+	echo "--abr    Choose the abr sort mode, slower than the avl mode"
+	echo "Exemple : bash main.sh -f meteo.csv -h --abr"
+	echo "--tab    Choose the tab sort mode, the slowest (with the use of nodes)"
+	echo "Exemple : bash main.sh -f meteo.csv -w --tab"
 	echo
 }
 
@@ -66,11 +74,11 @@ for i in $(seq 1 $#) ; do  #Check if the "-f" argument is used
 			;;
 		'-r') ascending=0 ; echo "reversed order mode"
 			;;
-		'-avl') sort_mode="avl" ; verif2=$(( $verif2 + 1 )) ; echo "Sort mode : avl" 
+		'--avl') sort_mode="avl" ; verif2=$(( $verif2 + 1 )) ; echo "Sort mode : avl" 
 			;;
-		'-abr') sort_mode="abr" ; verif2=$(( $verif2 + 1 )) ; echo "Sort mode : abr"
+		'--abr') sort_mode="abr" ; verif2=$(( $verif2 + 1 )) ; echo "Sort mode : abr"
 			;;
-		'-tab') sort_mode="tab" ; verif2=$(( $verif2 + 1 )) ; echo "Sort mode : tab"
+		'--tab') sort_mode="tab" ; verif2=$(( $verif2 + 1 )) ; echo "Sort mode : tab"
 			;; 
 	esac	
 done
@@ -88,7 +96,7 @@ fi
 ###### Check the sort method ####################################
 
 if [[ $verif2 -ge 2 ]] ; then  #If the sort mode method command is used more than once
-	echo "Please choose between '-avl' '-abr' '-tab', use --help for more details"
+	echo "Please choose between '--avl' '--abr' '--tab', use --help for more details"
 	exit 2
 elif [[ $verif2 -eq 0 ]] ; then  #If there is no sort mode chosed, then the default sort mode is used (Avl)
 	echo "Default sort mode : avl" 
@@ -99,7 +107,7 @@ fi
 for i in $(seq 1 $#) ; do  #Do the option for each arguments
 	ARG=${!i}  
 	case $ARG in
-		'-f' | $file_name | '--help' | '-r' | '-tab' | '-abr' | '-avl')  #Do nothing to avoid displaying the unknown argument statement.
+		'-f' | $file_name | '--help' | '-r' | '--tab' | '--abr' | '--avl')  #Do nothing to avoid displaying the unknown argument statement.
 			;;
 
 		'-t'*) case $ARG in  #Create a csv file depending of the mode chosen
