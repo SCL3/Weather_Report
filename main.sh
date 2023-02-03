@@ -14,37 +14,38 @@ help()
 	echo "Exemple : bash main.sh --help"
 	echo
 	echo "-f [file]     Select the meteo data file (THIS COMMAND IS ESSENTIAL)"
-	echo "Exemple : bash main.sh -f meteo.csv"
+	echo "Exemple : bash main.sh -f meteo_data.csv"
 	echo
 	echo "-t<1|2|3>     Create a file containing the temperature depending of the option : 1) Average temperature, minimum et maximum temperature depending of the station)"
 	echo "                                                                                 2) Average temperature depending of the time"
 	echo "                                                                                 3) Average temperature depending of the time and the station"
-	echo "Exemple : bash main.sh -f meteo.csv -t2"
+	echo "Exemple : bash main.sh -f meteo_data.csv -t2"
 	echo
 	echo "-p<1|2|3>     Create a file containing the atmospheric pressure depending of the option : 1) Average atmospheric pressure depending of the station"
 	echo "                                                                                          2) Average atmospheric pressure depending of the time"
 	echo "                                                                                          3) Average atmospheric pressure depending of the time and the station"
-	echo "Exemple : bash main.sh -f meteo.csv -p1"
+	echo "Exemple : bash main.sh -f meteo_data_data.csv -p1"
 	echo
 	echo "-w      Create a file containing the wind with the average direction and average wind speed for each station"
-	echo "Exemple : bash main.sh -f meteo.csv -w"
+	echo "Exemple : bash main.sh -f meteo_data.csv -w"
 	echo
 	echo "-h      Create a file containing the height for each station"
-	echo "Exemple : bash main.sh -f meteo.csv -h"
+	echo "Exemple : bash main.sh -f meteo_data.csv -h"
 	echo
 	echo "-m      Create a file containing the maximum moisture for each station"
-	echo "Exemple : bash main.sh -f meteo.csv -m"
+	echo "Exemple : bash main.sh -f meteo_data.csv -m"
 	echo
 	echo "-r      Ascending to descending mode or descending to ascending mode"
-	echo "Exemple : bash main.sh -f meteo.csv -m -r"
+	echo "Exemple : bash main.sh -f meteo_data.csv -m -r"
 	echo
 	echo "--avl    Choose the avl sort mode, the fatest (default sort mode)"
-	echo "Exemple : bash main.sh -f meteo.csv -m --avl"
+	echo "Exemple : bash main.sh -f meteo_data.csv -m --avl"
 	echo
 	echo "--abr    Choose the abr sort mode, slower than the avl mode"
-	echo "Exemple : bash main.sh -f meteo.csv -h --abr"
+	echo "Exemple : bash main.sh -f meteo_data.csv -h --abr"
+	echo
 	echo "--tab    Choose the tab sort mode, the slowest (with the use of nodes)"
-	echo "Exemple : bash main.sh -f meteo.csv -w --tab"
+	echo "Exemple : bash main.sh -f meteo_data.csv -w --tab"
 	echo
 }
 
@@ -60,6 +61,9 @@ verif=0  #value that will check if the -f command is used
 verif2=0  #value that will check if the sort mode method command is used once only
 ascending=1
 sort_mode='avl'
+
+########### Check every options ###############################################
+
 for i in $(seq 1 $#) ; do  #Check if the "-f" argument is used
 	ARG=${!i}
 	case $ARG in 
@@ -79,7 +83,7 @@ for i in $(seq 1 $#) ; do  #Check if the "-f" argument is used
 		'--abr') sort_mode="abr" ; verif2=$(( $verif2 + 1 )) ; echo "Sort mode : abr"
 			;;
 		'--tab') sort_mode="tab" ; verif2=$(( $verif2 + 1 )) ; echo "Sort mode : tab"
-			;; 
+			;;
 	esac	
 done
 
@@ -102,12 +106,32 @@ elif [[ $verif2 -eq 0 ]] ; then  #If there is no sort mode chosed, then the defa
 	echo "Default sort mode : avl" 
 fi
 
+########### Check the geographic limitation #####################
+
+for i in $(seq 1 $#) ; do  
+	ARG=${!i}
+	case $ARG in 
+		'-F')  echo "France + Corsica" ; awk 'FS=";" {if($1 >= 7005 && $1 <= 7790) print}' $file_name > meteo_sorted.csv ; stock=$file_name ; file_name=meteo_sorted.csv
+			;;
+		'-G')  echo "Guyana" ; awk 'FS=";" {if($1 >= 81401 && $1 <= 81415) print}' $file_name > meteo_sorted.csv ; stock=$file_name ; file_name=meteo_sorted.csv
+			;;
+		'-S')  echo "Saint-Pierre and Miquelon" ; awk 'FS=";" {if($1 == 71805) print}' $file_name > meteo_sorted.csv ; stock=$file_name ; file_name=meteo_sorted.csv
+			;;
+		'-A')  echo "West Indies" ; awk 'FS=";" {if($1 >= 78890 && $1 <= 78925) print}' $file_name > meteo_sorted.csv ; stock=$file_name ; file_name=meteo_sorted.csv
+			;;
+		'-O')  echo "Indian Ocean" ; awk 'FS=";" {if($1 >= 61968 && $1 <= 67005) print}' $file_name > meteo_sorted.csv ; stock=$file_name ; file_name=meteo_sorted.csv
+			;;
+		'-Q')  echo "Antarctic" ; awk 'FS=";" {if($1 == 89642) print}' $file_name > meteo_sorted.csv ; stock=$file_name ; file_name=meteo_sorted.csv
+			;; 
+	esac	
+done
+
 ###### The main function ########################################
 
 for i in $(seq 1 $#) ; do  #Do the option for each arguments
 	ARG=${!i}  
 	case $ARG in
-		'-f' | $file_name | '--help' | '-r' | '--tab' | '--abr' | '--avl')  #Do nothing to avoid displaying the unknown argument statement.
+		'-f' | $file_name | '--help' | '-r' | '--tab' | '--abr' | '--avl' | '-F' | '-G' | '-S' |  '-A' | '-O' | '-Q' | $stock)  #Do nothing to avoid displaying the unknown argument statement.
 			;;
 
 		'-t'*) case $ARG in  #Create a csv file depending of the mode chosen
